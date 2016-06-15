@@ -35,7 +35,9 @@
         android:layout_height="wrap_content"
         android:text="5KILLED"
         android:textColor="@android:color/white"
-        android:layout_centerInParent="true"
-        android:textSize="80dp"/>
+        android:textSize="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp" />
 
 </RelativeLayout>
