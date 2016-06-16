@@ -10,23 +10,23 @@
     tools:context="com.et.fivekilled.SplashScreen"
     android:background="#a1887f">
 
-    <TextView
+    <Helpers.fonts.AerosolTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ET"
-        android:id="@+id/textView"
+        android:id="@+id/et"
         android:textSize="100dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
+    <Helpers.fonts.AerosolTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="5 KILLED!"
-        android:id="@+id/textView2"
+        android:id="@+id/five_killed"
         android:textSize="30dp"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/et"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

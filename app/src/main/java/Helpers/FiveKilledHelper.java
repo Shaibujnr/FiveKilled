@@ -4,26 +4,20 @@ package Helpers;
  * Created by shaibujnr on 6/13/16.
  */
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.app.FragmentManager;
+import android.widget.Toast;
+
 import java.util.Random;
 
-public class FiveKilled {
+public class FiveKilledHelper {
+
+
     private static final String alphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private Random rand = new Random();
-
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		System.out.println(killed("ABCDE","ABNMH"));
-//		System.out.println(injured("ABCDE","CBAED"));
-//		System.out.println(none("ABCDE","FKGHL"));
-
-
-
-    }
     private String generateAlphs(int howMany){
         //generate howMany number of Alphabets
         int nons = howMany;
@@ -145,6 +139,20 @@ public class FiveKilled {
         }
 
     }
+    public void tst(String message, Context context){
+        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
+
+    }
+    public void createInGsmeDialog(Context context, FragmentManager fm, String message){
+        FiveKilledDialog fkDialog = new FiveKilledDialog();
+        Bundle dialogArgs = new Bundle();
+        dialogArgs.putInt("DialogType",2);
+        dialogArgs.putString("DialogMessage",message);
+        fkDialog.setArguments(dialogArgs);
+        fkDialog.show(fm,"");
+    }
+
+
 
 
 
