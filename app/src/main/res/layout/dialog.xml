@@ -3,4 +3,41 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<<<<<<< HEAD
+=======
+    <Helpers.fonts.DefaultTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This Dialog will be shown in game "
+        android:id="@+id/dialog_text"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Replay"
+            android:id="@+id/btnAction" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/btnCancel"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/btnAction"/>
+    </RelativeLayout>
+
+>>>>>>> 7eb67770e255301c98cb71bae9455f9b7fec48b0
 </LinearLayout>

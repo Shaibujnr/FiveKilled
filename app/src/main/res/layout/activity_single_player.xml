@@ -11,7 +11,7 @@
     <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
     <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
 
-    <TextView
+    <Helpers.fonts.InGameTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -79,6 +79,7 @@
         android:layout_alignBottom="@+id/gfive"
         android:layout_alignParentEnd="true" />
 
+<<<<<<< HEAD
 
 
     <ScrollView
@@ -99,6 +100,9 @@
         </HorizontalScrollView>
     </ScrollView>
     <GridLayout
+=======
+    <Helpers.fonts.InGameTextView
+>>>>>>> 7eb67770e255301c98cb71bae9455f9b7fec48b0
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/keyPad"

@@ -1,11 +1,16 @@
 package com.et.fivekilled;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.content.Intent;
 import android.renderscript.ScriptGroup;
+
+import android.content.Intent;
+import android.app.FragmentManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.GridView;
@@ -24,9 +30,12 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import Helpers.FiveKilled;
+
+import Helpers.FiveKilledHelper;
+import Helpers.FiveKilledDialog;
 
 public class SinglePlayerActivity extends AppCompatActivity {
+
 //    Keyboard mKeyboard;
 //    KeyboardView mKeyboardView;
 
@@ -40,9 +49,15 @@ public class SinglePlayerActivity extends AppCompatActivity {
     Button submit;
     TextView errorLabel;
     GridLayout display;
-    FiveKilled fiveKilled = new FiveKilled();
     GridLayout keyPad;
     RelativeLayout root;
+
+
+    private Button btnSubmit;
+    FragmentManager fm;
+    FiveKilledDialog fkDialog;
+    Bundle dialogArgs;
+    FiveKilledHelper fk;
 
 
 
@@ -50,6 +65,11 @@ public class SinglePlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
+        fkDialog = new FiveKilledDialog();
+        dialogArgs = new Bundle();
+        fk = new FiveKilledHelper();
+        fm = getFragmentManager();
+
 
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         ScreenHeight = dm.heightPixels;
@@ -76,7 +96,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         submit = (Button) findViewById(R.id.btnSubmit);
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setDisplay();
-        setKeyAlphs(fiveKilled.generateKeyAlphs(12));
+        setKeyAlphs(fk.generateKeyAlphs(12));
         setInput();
 
 //        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -168,5 +188,17 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
 
 
-    }
-}
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fk.createInGsmeDialog(SinglePlayerActivity.this,fm,"This is a test String");
+            }
+
+
+
+    });
+        Intent i = getIntent();
+        int difficulty = i.getIntExtra("difficulty",0);
+        fk.tst(""+difficulty,getApplicationContext());
+}}
