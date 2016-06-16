@@ -3,8 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<<<<<<< HEAD
-=======
     <Helpers.fonts.DefaultTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,5 +37,5 @@
             android:layout_toRightOf="@+id/btnAction"/>
     </RelativeLayout>
 
->>>>>>> 7eb67770e255301c98cb71bae9455f9b7fec48b0
+
 </LinearLayout>

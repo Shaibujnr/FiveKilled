@@ -2,8 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="KilledTheme" parent="Theme.AppCompat.Light.NoActionBar">
-<<<<<<< HEAD
-=======
+
         <!-- Customize your theme here. -->
         <!--<item name="android:windowBackground">@drawable/app_background</item>-->
 
@@ -13,7 +12,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
->>>>>>> 7eb67770e255301c98cb71bae9455f9b7fec48b0
+
         <!-- Customize your theme here. -->
         <!--<item name="android:windowBackground">@drawable/app_background</item>-->
         <item name="android:screenOrientation">portrait</item>

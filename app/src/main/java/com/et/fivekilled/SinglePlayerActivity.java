@@ -83,7 +83,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
 
 
-        keyPad = (GridLayout) findViewById(R.id.keyPad);
+//        keyPad = (GridLayout) findViewById(R.id.keyPad);
         display= (GridLayout) findViewById(R.id.display);
         submit = (Button) findViewById(R.id.btnSubmit);
         timeLabel = (TextView) findViewById(R.id.timer);
@@ -129,29 +129,29 @@ public class SinglePlayerActivity extends AppCompatActivity {
 //        return mKeyboardView.getVisibility() == View.VISIBLE;
 //    }
     public void setKeyAlphs(String alphs){
-        int mag = 2;
-        int row = 2;
-        int col = (alphs.length()/row)+1;
-
-
-        for(int i=0;i<2;i++){
-            for(int j=0;j<7;j++){
-                GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
-
-                lp.setMargins(mag,mag,mag,mag);
-                lp.height = ScreenHeight/10;
-                lp.width = (ScreenWidth-(mag*(col+3)))/col;
-                lp.rowSpec = GridLayout.spec(i);
-                lp.columnSpec = GridLayout.spec(j);
-                Button btn = new Button(this);
-                btn.setLayoutParams(lp);
-                btn.setBackgroundResource(android.R.color.holo_orange_dark);
-                btn.setText(""+i+""+j);
-                keyPad.addView(btn);
-            }
-
-
-        }
+//        int mag = 2;
+//        int row = 2;
+//        int col = (alphs.length()/row)+1;
+//
+//
+//        for(int i=0;i<2;i++){
+//            for(int j=0;j<7;j++){
+//                GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
+//
+//                lp.setMargins(mag,mag,mag,mag);
+//                lp.height = ScreenHeight/10;
+//                lp.width = (ScreenWidth-(mag*(col+3)))/col;
+//                lp.rowSpec = GridLayout.spec(i);
+//                lp.columnSpec = GridLayout.spec(j);
+//                Button btn = new Button(this);
+//                btn.setLayoutParams(lp);
+//                btn.setBackgroundResource(android.R.color.holo_orange_dark);
+//                btn.setText(""+i+""+j);
+//                keyPad.addView(btn);
+//            }
+//
+//
+//        }
 
 
     }

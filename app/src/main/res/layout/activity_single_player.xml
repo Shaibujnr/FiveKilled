@@ -79,7 +79,7 @@
         android:layout_alignBottom="@+id/gfive"
         android:layout_alignParentEnd="true" />
 
-<<<<<<< HEAD
+
 
 
     <ScrollView
@@ -99,19 +99,6 @@
             </GridLayout>
         </HorizontalScrollView>
     </ScrollView>
-    <GridLayout
-=======
-    <Helpers.fonts.InGameTextView
->>>>>>> 7eb67770e255301c98cb71bae9455f9b7fec48b0
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/keyPad"
-        android:rowCount="2"
-        android:columnCount="7"
-        android:background="#a1887f"
-        android:layout_alignParentBottom="true">
 
-
-    </GridLayout>
 
 </RelativeLayout>
