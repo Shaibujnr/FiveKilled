@@ -11,6 +11,7 @@ import Helpers.FiveKilledDialog;
 
 public class HomeMenu extends AppCompatActivity {
     FloatingActionButton spbtn;
+//    FloatingActionButton mpbtn;
     FloatingActionButton mpbtn;
     FragmentManager fm;
 
@@ -21,6 +22,7 @@ public class HomeMenu extends AppCompatActivity {
         fm = getFragmentManager();
 
         spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
+//        mpbtn = (FloatingActionButton) findViewById(R.id.multiPlayerButton);
        // mpbtn = (FloatingActionButton) findViewById(R.id.multiPlayerButton);
         spbtn.setOnClickListener(new View.OnClickListener() {
             @Override

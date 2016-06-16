@@ -7,7 +7,7 @@ package Helpers;
 import java.util.Random;
 
 public class FiveKilled {
-    private static final String alphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final String alphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private Random rand = new Random();
 
