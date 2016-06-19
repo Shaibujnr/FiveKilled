@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,7 +46,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
 
     TextView timeLabel;
-    EditText gone,gtwo,gthree,gfour,gfive;
+    EditText gone, gtwo, gthree, gfour, gfive;
     Button submit;
     TextView errorLabel;
     GridLayout display;
@@ -58,7 +59,10 @@ public class SinglePlayerActivity extends AppCompatActivity {
     FiveKilledDialog fkDialog;
     Bundle dialogArgs;
     FiveKilledHelper fk;
+    ArrayList<EditText> inputs;
+    ArrayList<Button> keyPadButtons;
 
+    View.OnClickListener inputListener;
 
 
     @Override
@@ -69,6 +73,8 @@ public class SinglePlayerActivity extends AppCompatActivity {
         dialogArgs = new Bundle();
         fk = new FiveKilledHelper();
         fm = getFragmentManager();
+        inputs = new ArrayList<EditText>();
+        keyPadButtons = new ArrayList<Button>();
 
 
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -76,95 +82,110 @@ public class SinglePlayerActivity extends AppCompatActivity {
         ScreenWidth = dm.widthPixels;
 
         gone = (EditText) findViewById(R.id.gone);
+        inputs.add(gone);
         gtwo = (EditText) findViewById(R.id.gtwo);
+        inputs.add(gtwo);
         gthree = (EditText) findViewById(R.id.gthree);
+        inputs.add(gthree);
         gfour = (EditText) findViewById(R.id.gfour);
+        inputs.add(gfour);
         gfive = (EditText) findViewById(R.id.gfive);
+        inputs.add(gfive);
 
 
-
-//        keyPad = (GridLayout) findViewById(R.id.keyPad);
-        display= (GridLayout) findViewById(R.id.display);
-        submit = (Button) findViewById(R.id.btnSubmit);
+        display = (GridLayout) findViewById(R.id.display);
+        keyPad = (GridLayout) findViewById(R.id.keyPad);
         timeLabel = (TextView) findViewById(R.id.timer);
         root = (RelativeLayout) findViewById(R.id.root);
 
-//        mKeyboard = new Keyboard(this,R.xml.kboard);
-//        mKeyboardView = (KeyboardView) findViewById(R.id.keyboardview);
-//        mKeyboardView.setKeyboard(mKeyboard);
-//        mKeyboardView.setPreviewEnabled(false);
-        submit = (Button) findViewById(R.id.btnSubmit);
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fk.createInGsmeDialog(SinglePlayerActivity.this, fm, "This is a test String");
+            }
+
+
+        });
+
+        inputListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText clickedEditText = (EditText) view;
+                String clickedText = clickedEditText.getText().toString();
+                clickedEditText.setText("");
+
+                for (Button btn : keyPadButtons) {
+                    if (btn.getText().toString().equals(clickedText)) {
+                        btn.setEnabled(true);
+                    }
+                }
+
+
+            }
+        };
+
         setDisplay();
         setKeyAlphs(fk.generateKeyAlphs(12));
         setInput();
 
-//        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                if(b){
-//                    showCustomKeyboard(view);
-//                }else{
-//                    hideCustomKeyboard();
-//                }
-//            }
-//        });
 
+    }
+
+    public void setKeyAlphs(String alphs) {
+        int mag = 2;
+        int row = 2;
+        int col = (alphs.length() / row);
+
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
+
+                lp.setMargins(mag, mag, mag, mag);
+                lp.height = ScreenHeight / 10;
+                lp.width = (ScreenWidth - (mag * (col + 3))) / col;
+                lp.rowSpec = GridLayout.spec(i);
+                lp.columnSpec = GridLayout.spec(j);
+                final Button btn = new Button(this);
+                btn.setLayoutParams(lp);
+                btn.setBackgroundResource(R.drawable.keypad_button);
+                btn.setText(String.valueOf(alphs.charAt(((6 * i) + j))));
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String clickedText = btn.getText().toString();
+                        EditText availableEdit = getEmptyEdit();
+                        if (availableEdit != null) {
+                            availableEdit.setText(clickedText);
+                            btn.setEnabled(false);
+                        }
+
+
+                    }
+                });
+                keyPadButtons.add(btn);
+                keyPad.addView(btn);
+            }
+
+
+        }
 
 
     }
-//    public void hideCustomKeyboard() {
-//        mKeyboardView.setVisibility(View.GONE);
-//        mKeyboardView.setEnabled(false);
-//    }
-//
-//    public void showCustomKeyboard( View v ) {
-//        mKeyboardView.setVisibility(View.VISIBLE);
-//        mKeyboardView.setEnabled(true);
-//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-//    }
-//
-//    public boolean isCustomKeyboardVisible() {
-//        return mKeyboardView.getVisibility() == View.VISIBLE;
-//    }
-    public void setKeyAlphs(String alphs){
-//        int mag = 2;
-//        int row = 2;
-//        int col = (alphs.length()/row)+1;
-//
-//
-//        for(int i=0;i<2;i++){
-//            for(int j=0;j<7;j++){
-//                GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
-//
-//                lp.setMargins(mag,mag,mag,mag);
-//                lp.height = ScreenHeight/10;
-//                lp.width = (ScreenWidth-(mag*(col+3)))/col;
-//                lp.rowSpec = GridLayout.spec(i);
-//                lp.columnSpec = GridLayout.spec(j);
-//                Button btn = new Button(this);
-//                btn.setLayoutParams(lp);
-//                btn.setBackgroundResource(android.R.color.holo_orange_dark);
-//                btn.setText(""+i+""+j);
-//                keyPad.addView(btn);
-//            }
-//
-//
-//        }
 
-
-    }
-    public void setDisplay(){
+    public void setDisplay() {
 //        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams();
 //        lp.ScreenHeight-keyPad.getHeight()-submit.getHeight()-timeLabel.getHeight());
 //        display.setMinimumWidth(ScreenWidth);
 //        display.setLayoutParams();
     }
-    public void setInput(){
+
+    public void setInput() {
         int mag = 2;
-        int textWidth = (ScreenWidth-(7*mag))/6;
-        int textHeight = (ScreenHeight)/12;
+        int textWidth = (ScreenWidth - (7 * mag)) / 7;
+        int textHeight = (ScreenHeight) / 12;
         gone.setInputType(InputType.TYPE_NULL);
         gtwo.setInputType(InputType.TYPE_NULL);
         gthree.setInputType(InputType.TYPE_NULL);
@@ -173,32 +194,35 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
         gone.setHeight(textHeight);
         gone.setWidth(textWidth);
+        gone.setOnClickListener(inputListener);
 
         gtwo.setHeight(textHeight);
         gtwo.setWidth(textWidth);
+        gtwo.setOnClickListener(inputListener);
 
         gthree.setHeight(textHeight);
         gthree.setWidth(textWidth);
+        gthree.setOnClickListener(inputListener);
 
         gfour.setHeight(textHeight);
         gfour.setWidth(textWidth);
+        gfour.setOnClickListener(inputListener);
 
         gfive.setHeight(textHeight);
         gfive.setWidth(textWidth);
+        gfive.setOnClickListener(inputListener);
 
 
+    }
 
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fk.createInGsmeDialog(SinglePlayerActivity.this,fm,"This is a test String");
+    public EditText getEmptyEdit() {
+        for (EditText edt : inputs) {
+            if (edt.getText().toString().isEmpty()) {
+                return edt;
             }
+        }
+        return null;
 
+    }
+}
 
-
-    });
-        Intent i = getIntent();
-        int difficulty = i.getIntExtra("difficulty",0);
-        fk.tst(""+difficulty,getApplicationContext());
-}}

@@ -24,8 +24,9 @@ import android.widget.Button;
 
 
 import com.et.fivekilled.R;
-
 import com.et.fivekilled.SinglePlayerActivity;
+
+
 
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class FiveKilledDialog extends DialogFragment {
 
                         i.putExtra("difficulty",1);
 
-                        i.putExtra("Select difficulty",1);
+//                        i.putExtra("Select difficulty",1);
 
                         startActivity(i);
                         break;
@@ -114,7 +115,7 @@ public class FiveKilledDialog extends DialogFragment {
         });
 
         builder.setTitle("Select Difficulty");
-//        builder.setView(inflater.inflate(R.layout.dialog,null));
+
 
         builder.setTitle("Difficulty");
         AlertDialog dialog = builder.create();
@@ -144,7 +145,7 @@ public class FiveKilledDialog extends DialogFragment {
         builder.setView(inGameDialogView);
 
         builder.setTitle("CUSTOMIZABLE IN GAME DIALOG");
-//        builder.sets
+
 
         return builder.create();
     }

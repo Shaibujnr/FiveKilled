@@ -13,8 +13,6 @@ import Helpers.fonts.MenuTextView;
 
 public class HomeMenu extends AppCompatActivity {
     FloatingActionButton spbtn;
-//    FloatingActionButton mpbtn;
-    FloatingActionButton mpbtn;
     FragmentManager fm;
 
     Bundle Dialogargs;
@@ -29,13 +27,11 @@ public class HomeMenu extends AppCompatActivity {
 
 
         spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
-//        mpbtn = (FloatingActionButton) findViewById(R.id.multiPlayerButton);
 
         FiveKilled = (MenuTextView) findViewById(R.id.fk);
 
         spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
 
-       // mpbtn = (FloatingActionButton) findViewById(R.id.multiPlayerButton);
         spbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,8 +42,7 @@ public class HomeMenu extends AppCompatActivity {
                 fk.setArguments(Dialogargs);
 
                 fk.show(fm,"");
-//                Intent i = new Intent(HomeMenu.this,SinglePlayerActivity.class);
-//                startActivity(i);
+
             }
         });
     }
