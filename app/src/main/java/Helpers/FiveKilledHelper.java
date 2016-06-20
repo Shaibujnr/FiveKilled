@@ -152,6 +152,13 @@ public class FiveKilledHelper {
         fkDialog.show(fm,"");
     }
 
+    public String getResult(String guess,String special){
+        int killed = killed(guess,special);
+        int injured = injured(guess,special);
+        int none = none(guess,special);
+        return String.format("%dk %di %dn",killed,injured,none);
+    }
+
 
 
 

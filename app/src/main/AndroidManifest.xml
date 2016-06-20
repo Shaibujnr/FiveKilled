@@ -10,10 +10,12 @@
         android:theme="@style/KilledTheme">
 
         <activity android:name=".HomeMenu"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".SinglePlayerActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".HomeMenu"/>
+            android:parentActivityName=".HomeMenu"
+            />
         <activity android:name=".SplashScreen"
             android:screenOrientation="portrait">
 
