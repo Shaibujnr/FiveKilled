@@ -10,7 +10,7 @@
     tools:context="com.et.fivekilled.SplashScreen"
     android:background="#a1887f">
 
-    <Helpers.fonts.AerosolTextView
+    <Helpers.fonts.EtTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -20,7 +20,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <Helpers.fonts.AerosolTextView
+    <Helpers.fonts.MenuTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"

@@ -31,7 +31,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fk.createInGsmeDialog(SinglePlayerActivity.this,fm,"This is a test String");
+                fk.createInGameDialog(SinglePlayerActivity.this,fm,"This is a test String");
             }
         });
 

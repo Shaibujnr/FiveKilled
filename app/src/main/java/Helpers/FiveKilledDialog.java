@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.et.fivekilled.R;
 import com.et.fivekilled.SinglePlayerActivity;
@@ -90,8 +91,8 @@ public class FiveKilledDialog extends DialogFragment {
 
         View inGameDialogView =inflater.inflate(R.layout.dialog,null);
         DefaultTextView dialog_textview = (DefaultTextView) inGameDialogView.findViewById(R.id.dialog_text) ;
-        Button action_button = (Button)  inGameDialogView.findViewById(R.id.btnAction);
-        Button cancel_button = (Button)  inGameDialogView.findViewById(R.id.btnCancel);
+        ImageButton action_button = (ImageButton)  inGameDialogView.findViewById(R.id.btnAction);
+        ImageButton cancel_button = (ImageButton)  inGameDialogView.findViewById(R.id.btnCancel);
         dialog_textview.setText(msg);
         action_button.setOnClickListener(new View.OnClickListener() {
             @Override

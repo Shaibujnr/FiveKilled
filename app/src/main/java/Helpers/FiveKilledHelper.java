@@ -8,7 +8,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.FragmentManager;
+import android.view.Gravity;
 import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.util.Random;
 
@@ -140,10 +143,11 @@ public class FiveKilledHelper {
 
     }
     public void tst(String message, Context context){
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
+        Toast to = Toast.makeText(context,message,Toast.LENGTH_SHORT);
+        to.setGravity(Gravity.NO_GRAVITY,0,0);
 
     }
-    public void createInGsmeDialog(Context context, FragmentManager fm, String message){
+    public void createInGameDialog(Context context, FragmentManager fm, String message){
         FiveKilledDialog fkDialog = new FiveKilledDialog();
         Bundle dialogArgs = new Bundle();
         dialogArgs.putInt("DialogType",2);

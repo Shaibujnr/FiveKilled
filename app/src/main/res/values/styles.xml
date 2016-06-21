@@ -12,9 +12,17 @@
     </style>
     <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnim</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
+    <style name="DialogAnim">
+        <item name="android:windowEnterAnimation">@anim/anim_flash</item>
+    </style>
+    <style name="LayoutAnim">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+    </style>
+    
+    
 
 </resources>
