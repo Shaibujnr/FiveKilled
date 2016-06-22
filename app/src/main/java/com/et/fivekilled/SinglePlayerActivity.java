@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.app.FragmentManager;
 
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -183,12 +185,14 @@ public class SinglePlayerActivity extends AppCompatActivity {
         lpg.height= (ScreenHeight-keyPad.getHeight()-gone.getHeight()-timeLabel.getHeight())/8;
         lpg.width = (ScreenWidth-(displayMag*4))/2;
         lpg.columnSpec = GridLayout.spec(0);
-        lpg.setMargins(displayMag,displayMag,displayMag,displayMag);
+        lpg.setMargins(0,0,0,0);
+
 
         lpr.height= (ScreenHeight-keyPad.getHeight()-gone.getHeight()-timeLabel.getHeight())/8;
         lpr.width = (ScreenWidth-(displayMag*4))/2;
         lpr.columnSpec = GridLayout.spec(1);
-        lpr.setMargins(displayMag,displayMag,displayMag,displayMag);
+        lpr.setMargins(0,0,0,0);
+
 
         String guess = "";
         String result = "";
@@ -199,15 +203,19 @@ public class SinglePlayerActivity extends AppCompatActivity {
         TextView guessdt = new TextView(this);
         guessdt.setText(guess);
         guessdt.setLayoutParams(lpg);
-        guessdt.setBackgroundResource(R.drawable.brown6);
+        guessdt.setBackgroundResource(R.drawable.guess_display_label);
         guessdt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        guessdt.setGravity(Gravity.CENTER);
+        guessdt.setTypeface(null, Typeface.BOLD);
 
 
         TextView resultdt = new TextView(this);
         resultdt.setText(result);
         resultdt.setLayoutParams(lpr);
-        resultdt.setBackgroundResource(R.drawable.brown6);
+        resultdt.setBackgroundResource(R.drawable.resuslt_display_label);
         resultdt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        resultdt.setGravity(Gravity.CENTER);
+        resultdt.setTypeface(null, Typeface.BOLD);
 
 
         display.addView(guessdt);
