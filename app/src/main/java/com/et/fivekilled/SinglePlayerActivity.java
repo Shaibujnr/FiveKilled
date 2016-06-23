@@ -141,11 +141,10 @@ public class SinglePlayerActivity extends AppCompatActivity {
         fk.tst(""+difficulty,getApplicationContext());
     }
 
-}
-            }
+});
 
 
-        });
+
 
         inputListener = new View.OnClickListener() {
             @Override
@@ -198,7 +197,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         mPlayer.setLooping(true);
 
 
-    }
+    }}
 
     private void handleSubmit() {
         int displayMag = 2;
