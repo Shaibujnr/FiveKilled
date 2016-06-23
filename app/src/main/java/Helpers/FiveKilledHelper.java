@@ -146,7 +146,7 @@ public class FiveKilledHelper {
         Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
 
     }
-    public void createInGsmeDialog(Context context, FragmentManager fm, String message){
+    public void createInGameDialog(Context context, FragmentManager fm, String message){
         FiveKilledDialog fkDialog = new FiveKilledDialog();
         Bundle dialogArgs = new Bundle();
         dialogArgs.putInt("DialogType",2);

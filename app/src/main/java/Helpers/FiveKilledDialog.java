@@ -24,7 +24,7 @@ import android.widget.ImageButton;
 
 
 
-import com.et.fivekilled.R;
+
 import com.et.fivekilled.SinglePlayerActivity;
 
 import Helpers.fonts.DefaultTextView;
