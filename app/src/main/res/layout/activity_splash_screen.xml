@@ -11,6 +11,11 @@
     android:background="#a1887f">
 
     <Helpers.fonts.EtTextView
+
+
+
+
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -20,7 +25,9 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
+
     <Helpers.fonts.MenuTextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"

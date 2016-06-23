@@ -2,6 +2,16 @@ package Helpers;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +22,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+
+
 import com.et.fivekilled.R;
 import com.et.fivekilled.SinglePlayerActivity;
 
 import Helpers.fonts.DefaultTextView;
+
+
+
+
+import java.util.ArrayList;
+
+import Helpers.fonts.DefaultTextView;
+
 
 /**
  * Created by AbdulGafar on 6/15/2016.
@@ -23,6 +43,12 @@ import Helpers.fonts.DefaultTextView;
 public class FiveKilledDialog extends DialogFragment {
     FragmentManager fm = getFragmentManager();
     FiveKilledHelper fk = new FiveKilledHelper();
+
+    Bundle DialogArguments;
+    ListAdapter listAdapter;
+
+
+
     public void setDaialogType(){
 
     }
@@ -49,6 +75,7 @@ public class FiveKilledDialog extends DialogFragment {
                 break;
 
         }
+
         return ListDailog;
     }
 
@@ -66,7 +93,13 @@ public class FiveKilledDialog extends DialogFragment {
                 Intent i = new Intent(getActivity(), SinglePlayerActivity.class);
                 switch (which){
                     case 0:
+
                         i.putExtra("Select difficulty",1);
+
+                        i.putExtra("difficulty",1);
+
+//                        i.putExtra("Select difficulty",1);
+
                         startActivity(i);
                         break;
                     case 1:
@@ -81,6 +114,10 @@ public class FiveKilledDialog extends DialogFragment {
                 }
             }
         });
+
+        builder.setTitle("Select Difficulty");
+
+
         builder.setTitle("Difficulty");
         AlertDialog dialog = builder.create();
         return dialog;
@@ -110,6 +147,8 @@ public class FiveKilledDialog extends DialogFragment {
 
         builder.setTitle("CUSTOMIZABLE IN GAME DIALOG");
 //        builder.sets
+
+
         return builder.create();
     }
 }

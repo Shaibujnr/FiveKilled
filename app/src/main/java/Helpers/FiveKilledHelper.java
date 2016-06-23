@@ -143,17 +143,23 @@ public class FiveKilledHelper {
 
     }
     public void tst(String message, Context context){
-        Toast to = Toast.makeText(context,message,Toast.LENGTH_SHORT);
-        to.setGravity(Gravity.NO_GRAVITY,0,0);
+        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
 
     }
-    public void createInGameDialog(Context context, FragmentManager fm, String message){
+    public void createInGsmeDialog(Context context, FragmentManager fm, String message){
         FiveKilledDialog fkDialog = new FiveKilledDialog();
         Bundle dialogArgs = new Bundle();
         dialogArgs.putInt("DialogType",2);
         dialogArgs.putString("DialogMessage",message);
         fkDialog.setArguments(dialogArgs);
         fkDialog.show(fm,"");
+    }
+
+    public String getResult(String guess,String special){
+        int killed = killed(guess,special);
+        int injured = injured(guess,special);
+        int none = none(guess,special);
+        return String.format("%dk %di %dn",killed,injured,none);
     }
 
 

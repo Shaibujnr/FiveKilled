@@ -18,16 +18,19 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal">
-
         <ImageButton
+
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Replay"
+
             android:id="@+id/btnAction"
             android:src="@android:drawable/checkbox_on_background" />
 
         <ImageButton
+
+
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,8 +38,10 @@
             android:id="@+id/btnCancel"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+
             android:layout_toRightOf="@+id/btnAction"
             android:src="@android:drawable/ic_delete" />
     </RelativeLayout>
+
 
 </LinearLayout>

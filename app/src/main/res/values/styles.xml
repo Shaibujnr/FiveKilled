@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="KilledTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
         <!-- Customize your theme here. -->
         <!--<item name="android:windowBackground">@drawable/app_background</item>-->
 
@@ -10,6 +11,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
         <!-- Customize your theme here. -->
         <item name="android:windowAnimationStyle">@style/DialogAnim</item>
@@ -22,7 +24,5 @@
         <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
         <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
-    
-    
 
 </resources>

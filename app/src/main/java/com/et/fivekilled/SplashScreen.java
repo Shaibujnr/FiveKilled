@@ -1,36 +1,44 @@
 package com.et.fivekilled;
 
 import android.content.Intent;
+
 import android.graphics.Typeface;
+
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 
 import Helpers.fonts.AerosolTextView;
-import Helpers.fonts.EtTextView;
-import Helpers.fonts.MenuTextView;
+
+
 
 public class SplashScreen extends AppCompatActivity implements  Runnable{
-    MenuTextView FiveKilled;
-    EtTextView ET;
-    Animation anim_flash,anim_bounce;
+
+
+
+
+AerosolTextView FiveKilled,ET;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
-        anim_flash = AnimationUtils.loadAnimation(this, R.anim.anim_flash);
-        anim_bounce = AnimationUtils.loadAnimation(this, R.anim.anim_bounce);
-        FiveKilled = (MenuTextView) findViewById(R.id.five_killed);
-        ET = (EtTextView) findViewById(R.id.et);
-        anim_bounce.setDuration(3000);
-        anim_bounce.setRepeatMode(Animation.REVERSE);
-        FiveKilled.setAnimation(anim_bounce);
 
 
+        new Handler().postDelayed(this,5000);
 
+        FiveKilled = (AerosolTextView) findViewById(R.id.five_killed);
+        ET = (AerosolTextView) findViewById(R.id.et);
+
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/GreatPoints.ttf");
+        ET.setTypeface(tf);
+        FiveKilled.setTypeface(tf);
         new Handler().postDelayed(this,2000);
+
     }
 
     @Override

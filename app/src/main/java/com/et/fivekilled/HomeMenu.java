@@ -1,6 +1,6 @@
 package com.et.fivekilled;
 
-import android.animation.Animator;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,13 @@ import android.view.animation.AnimationUtils;
 import Helpers.FiveKilledDialog;
 import Helpers.fonts.EtTextView;
 import Helpers.fonts.MenuTextView;
+import android.view.Window;
+import android.view.WindowManager;
+
+import Helpers.FiveKilledDialog;
+
+import Helpers.fonts.MenuTextView;
+
 
 public class HomeMenu extends AppCompatActivity {
     FloatingActionButton spbtn;
@@ -24,6 +31,8 @@ public class HomeMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home_menu);
         anim_flash = AnimationUtils.loadAnimation(this, R.anim.anim_flash);
         anim_bounce = AnimationUtils.loadAnimation(this, R.anim.anim_bounce);
