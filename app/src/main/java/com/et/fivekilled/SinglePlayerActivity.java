@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 
 import Helpers.Constants;
+import Helpers.CountDownHelper;
 import Helpers.FiveKilledHelper;
 import Helpers.FiveKilledDialog;
 import Helpers.StaticHelpers;
@@ -41,6 +42,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
 
     int difficultySelected;
+    int number_of_calls = 0;
 
 
     DisplayMetrics dm = new DisplayMetrics();
@@ -74,7 +76,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
     String ComSpecialNumbers;
 
     MediaPlayer mPlayer;
-
+    CountDownHelper cdHelper;
 
 
 
@@ -176,8 +178,6 @@ public class SinglePlayerActivity extends AppCompatActivity {
         };
 
         setTimeFromDifficulty();
-
-        setDisplay();
         setKeyAlphs(keyAlphs);
         setInput();
 
@@ -189,6 +189,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
     }
 
     private void handleSubmit() {
+        number_of_calls++;
         int displayMag = 2;
         GridLayout.LayoutParams lpg = new GridLayout.LayoutParams();
         GridLayout.LayoutParams lpr = new GridLayout.LayoutParams();
@@ -229,6 +230,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         resultdt.setTypeface(null, Typeface.BOLD);
 
 
+
         display.addView(guessdt);
         display.addView(resultdt);
         for(Button edt: inputs){
@@ -244,10 +246,11 @@ public class SinglePlayerActivity extends AppCompatActivity {
             }
         });
         String resultString="";
-        if(result.contains("i")){
-            fk.createWinDialog(fm,"7","78","0987");
-            //createwindialog(fm, number of calls, time taken, claculated score);
+
+        if(fk.isWin(result)){
+            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(difficultySelected),"600");
         }
+
 
 
     }
@@ -262,58 +265,22 @@ public class SinglePlayerActivity extends AppCompatActivity {
                 duration = convertDifficultyToMillis(Constants.DIFFICULTY_EASY_TIME);
                 txt = StaticHelpers.getTimeFormat(duration);
                 timeLabel.setText(txt);
-                new CountDownTimer(duration,1000){
-
-                    @Override
-                    public void onTick(long l) {
-                        timeLabel.setText(StaticHelpers.getTimeFormat(l));
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        timeLabel.setText("Finished");
-
-                    }
-                }.start();
+                cdHelper = new CountDownHelper(duration,1000,timeLabel,this);
+                cdHelper.start();
                 break;
             case 2:
                 duration = convertDifficultyToMillis(Constants.DIFFICULTY_MEDIUM_TIME);
                 txt = StaticHelpers.getTimeFormat(duration);
                 timeLabel.setText(txt);
-                new CountDownTimer(duration,1000){
-
-                    @Override
-                    public void onTick(long l) {
-                        timeLabel.setText(StaticHelpers.getTimeFormat(l));
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        timeLabel.setText("Finished");
-
-                    }
-                }.start();
+                cdHelper = new CountDownHelper(duration,1000,timeLabel,this);
+                cdHelper.start();
                 break;
             case 3:
                 duration = convertDifficultyToMillis(Constants.DIFFICULTY_HARD_TIME);
                 txt = StaticHelpers.getTimeFormat(duration);
                 timeLabel.setText(txt);
-                new CountDownTimer(duration,1000){
-
-                    @Override
-                    public void onTick(long l) {
-                        timeLabel.setText(StaticHelpers.getTimeFormat(l));
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        timeLabel.setText("Finished");
-
-                    }
-                }.start();
+                cdHelper = new CountDownHelper(duration,1000,timeLabel,this);
+                cdHelper.start();
                 break;
         }
     }
@@ -368,22 +335,15 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
     }
 
-    public void setDisplay() {
-//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams();
-//        lp.ScreenHeight-keyPad.getHeight()-submit.getHeight()-timeLabel.getHeight());
-//        display.setMinimumWidth(ScreenWidth);
-//        display.setLayoutParams();
-    }
-
     public void setInput() {
         int mag = 2;
         int textWidth = (ScreenWidth - (7 * mag)) /14;
         int textHeight = (ScreenHeight) / 12;
-//        gone.setInputType(InputType.TYPE_NULL);
-//        gtwo.setInputType(InputType.TYPE_NULL);
-//        gthree.setInputType(InputType.TYPE_NULL);
-//        gfour.setInputType(InputType.TYPE_NULL);
-//        gfive.setInputType(InputType.TYPE_NULL);
+
+
+
+
+
 
         gone.setHeight(textHeight);
         gone.setWidth(textWidth);
@@ -429,6 +389,35 @@ public class SinglePlayerActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    private String getTimeUsed(int dif){
+        String remainingTime = timeLabel.getText().toString();
+        String[] rtminSec = remainingTime.split(":");
+        long rMinute = Long.parseLong(rtminSec[0]);
+        long rSec = Long.parseLong(rtminSec[1]);
+        long rTotalSec = (rMinute*60)+rSec;
+        long initialTime=0;
+        switch(dif){
+            case 1:
+                initialTime = Constants.DIFFICULTY_EASY_TIME;
+                break;
+            case 2:
+                initialTime = Constants.DIFFICULTY_MEDIUM_TIME;
+                break;
+            case 3:
+                initialTime = Constants.DIFFICULTY_HARD_TIME;
+                break;
+        }
+        long initialTimeInSeconds = initialTime*60;
+        long totalSecondsUsed = initialTimeInSeconds - rTotalSec;
+        long mUsed = totalSecondsUsed/60;
+        long sUsed = totalSecondsUsed%60;
+
+        String MinutesUsed = String.valueOf(mUsed)+" : "+String.valueOf(sUsed);
+        return MinutesUsed;
+
+
     }
 }
 

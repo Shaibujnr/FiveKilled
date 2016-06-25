@@ -172,6 +172,15 @@ public class FiveKilledHelper {
         return String.format("%dk %di %dn",killed,injured,none);
     }
 
+    public boolean isWin(String result){
+        if(result.equals("5k 0i 0n")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
 
 
