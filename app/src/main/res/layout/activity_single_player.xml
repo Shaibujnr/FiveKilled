@@ -92,7 +92,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/sv"
         android:layout_below="@+id/input_container"
-        android:layout_above="@+id/keyPad">
+        android:layout_above="@+id/keyPad"
+        android:fillViewport="false">
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

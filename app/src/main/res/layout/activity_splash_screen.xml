@@ -10,37 +10,30 @@
     tools:context="com.et.fivekilled.SplashScreen"
     android:background="@drawable/brown8">
 
+    <Helpers.fonts.EtTextView
 
 
 
-    <Helpers.fonts.AerosolTextView
+
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ET"
-
-
-
         android:id="@+id/et"
         android:textSize="100dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 
-
-    <Helpers.fonts.AerosolTextView
+    <Helpers.fonts.MenuTextView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="5 KILLED!"
-
-
-
         android:id="@+id/five_killed"
         android:textSize="30dp"
         android:layout_below="@+id/et"
-
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
