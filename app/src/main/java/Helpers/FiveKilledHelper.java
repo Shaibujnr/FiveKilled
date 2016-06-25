@@ -6,6 +6,7 @@ package Helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.view.Gravity;
@@ -146,11 +147,20 @@ public class FiveKilledHelper {
         Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
 
     }
-    public void createInGameDialog(Context context, FragmentManager fm, String message){
+    public void createInGameDialog(FragmentManager fm, String message){
         FiveKilledDialog fkDialog = new FiveKilledDialog();
         Bundle dialogArgs = new Bundle();
         dialogArgs.putInt("DialogType",2);
         dialogArgs.putString("DialogMessage",message);
+        fkDialog.setArguments(dialogArgs);
+        fkDialog.show(fm,"");
+    } public void createWinDialog( FragmentManager fm, String No_of_calls, String time_taken,String score){
+        FiveKilledDialog fkDialog = new FiveKilledDialog();
+        Bundle dialogArgs = new Bundle();
+        dialogArgs.putInt("DialogType",3);
+        dialogArgs.putString("noc",No_of_calls);
+        dialogArgs.putString("tt",time_taken);
+        dialogArgs.putString("score",score);
         fkDialog.setArguments(dialogArgs);
         fkDialog.show(fm,"");
     }

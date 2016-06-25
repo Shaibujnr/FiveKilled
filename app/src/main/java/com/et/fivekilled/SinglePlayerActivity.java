@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.app.FragmentManager;
 
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -92,12 +93,6 @@ public class SinglePlayerActivity extends AppCompatActivity {
         keyPadButtons = new ArrayList<Button>();
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fk.createInGameDialog(SinglePlayerActivity.this,fm,"This is a test String");
-            }
-        });
         keyAlphs = fk.generateKeyAlphs(12);
         ComSpecialNumbers = fk.generateSpecialAlphs(5,keyAlphs);
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -127,7 +122,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                fk.createInGsmeDialog(SinglePlayerActivity.this, fm, "This is a test String");
+//                fk.createInGameDialog(SinglePlayerActivity.this, fm, "This is a test String");
                 handleSubmit();
 
         Intent i = getIntent();
@@ -248,7 +243,11 @@ public class SinglePlayerActivity extends AppCompatActivity {
                 sview.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
-
+        String resultString="";
+        if(result.contains("i")){
+            fk.createWinDialog(fm,"7","78","0987");
+            //createwindialog(fm, number of calls, time taken, claculated score);
+        }
 
 
     }

@@ -11,7 +11,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import Helpers.fonts.AerosolTextView;
-
+import Helpers.fonts.EtTextView;
+import Helpers.fonts.MenuTextView;
 
 
 public class SplashScreen extends AppCompatActivity implements  Runnable{
@@ -19,7 +20,8 @@ public class SplashScreen extends AppCompatActivity implements  Runnable{
 
 
 
-AerosolTextView FiveKilled,ET;
+    MenuTextView FiveKilled;
+    EtTextView ET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +31,8 @@ AerosolTextView FiveKilled,ET;
         setContentView(R.layout.activity_splash_screen);
 
 
-        new Handler().postDelayed(this,5000);
-
-        FiveKilled = (AerosolTextView) findViewById(R.id.five_killed);
-        ET = (AerosolTextView) findViewById(R.id.et);
+        FiveKilled = (MenuTextView) findViewById(R.id.five_killed);
+        ET = (EtTextView) findViewById(R.id.et);
 
         Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/GreatPoints.ttf");
         ET.setTypeface(tf);
