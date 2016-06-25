@@ -1,7 +1,5 @@
 package com.et.fivekilled;
 
-import android.content.Intent;
-import android.app.FragmentManager;
 
 import android.content.Intent;
 
@@ -15,11 +13,10 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -31,9 +28,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import Helpers.FiveKilledHelper;
-import Helpers.FiveKilledDialog;
 import java.util.ArrayList;
 
 
@@ -41,6 +35,7 @@ import Helpers.Constants;
 import Helpers.FiveKilledHelper;
 import Helpers.FiveKilledDialog;
 import Helpers.StaticHelpers;
+
 public class SinglePlayerActivity extends AppCompatActivity {
 
 
@@ -53,7 +48,8 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
 
     TextView timeLabel;
-    EditText gone, gtwo, gthree, gfour, gfive;
+//    EditText gone, gtwo, gthree, gfour, gfive;
+    Button gone, gtwo, gthree, gfour, gfive;
 
     GridLayout display;
     GridLayout keyPad;
@@ -66,7 +62,8 @@ public class SinglePlayerActivity extends AppCompatActivity {
     FiveKilledDialog fkDialog;
     Bundle dialogArgs;
     FiveKilledHelper fk;
-    ArrayList<EditText> inputs;
+//    ArrayList<EditText> inputs;
+    ArrayList<Button> inputs;
     ArrayList<Button> keyPadButtons;
 
     View.OnClickListener inputListener;
@@ -90,11 +87,8 @@ public class SinglePlayerActivity extends AppCompatActivity {
         dialogArgs = new Bundle();
         fk = new FiveKilledHelper();
         fm = getFragmentManager();
-        fkDialog = new FiveKilledDialog();
-        dialogArgs = new Bundle();
-        fk = new FiveKilledHelper();
-        fm = getFragmentManager();
-        inputs = new ArrayList<EditText>();
+//        inputs = new ArrayList<EditText>();
+        inputs = new ArrayList<Button>();
         keyPadButtons = new ArrayList<Button>();
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -110,15 +104,15 @@ public class SinglePlayerActivity extends AppCompatActivity {
         ScreenHeight = dm.heightPixels;
         ScreenWidth = dm.widthPixels;
 
-        gone = (EditText) findViewById(R.id.gone);
+        gone = (Button) findViewById(R.id.gone);
         inputs.add(gone);
-        gtwo = (EditText) findViewById(R.id.gtwo);
+        gtwo = (Button) findViewById(R.id.gtwo);
         inputs.add(gtwo);
-        gthree = (EditText) findViewById(R.id.gthree);
+        gthree = (Button) findViewById(R.id.gthree);
         inputs.add(gthree);
-        gfour = (EditText) findViewById(R.id.gfour);
+        gfour = (Button) findViewById(R.id.gfour);
         inputs.add(gfour);
-        gfive = (EditText) findViewById(R.id.gfive);
+        gfive = (Button) findViewById(R.id.gfive);
         inputs.add(gfive);
 
 
@@ -149,9 +143,9 @@ public class SinglePlayerActivity extends AppCompatActivity {
         inputListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText clickedEditText = (EditText) view;
-                String clickedText = clickedEditText.getText().toString();
-                clickedEditText.setText("");
+                Button clickedInput= (Button) view;
+                String clickedText = clickedInput.getText().toString();
+                clickedInput.setText("");
 
                 for (Button btn : keyPadButtons) {
                     if (btn.getText().toString().equals(clickedText)) {
@@ -197,7 +191,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         mPlayer.setLooping(true);
 
 
-    }}
+    }
 
     private void handleSubmit() {
         int displayMag = 2;
@@ -207,36 +201,42 @@ public class SinglePlayerActivity extends AppCompatActivity {
         lpg.height= (ScreenHeight-keyPad.getHeight()-gone.getHeight()-timeLabel.getHeight())/8;
         lpg.width = (ScreenWidth-(displayMag*4))/2;
         lpg.columnSpec = GridLayout.spec(0);
-        lpg.setMargins(displayMag,displayMag,displayMag,displayMag);
+        lpg.setMargins(0,0,0,0);
+
 
         lpr.height= (ScreenHeight-keyPad.getHeight()-gone.getHeight()-timeLabel.getHeight())/8;
         lpr.width = (ScreenWidth-(displayMag*4))/2;
         lpr.columnSpec = GridLayout.spec(1);
-        lpr.setMargins(displayMag,displayMag,displayMag,displayMag);
+        lpr.setMargins(0,0,0,0);
+
 
         String guess = "";
         String result = "";
-        for(EditText edt: inputs){
+        for(Button edt: inputs){
             guess+=edt.getText().toString();
         }
         result = fk.getResult(guess,ComSpecialNumbers);
         TextView guessdt = new TextView(this);
         guessdt.setText(guess);
         guessdt.setLayoutParams(lpg);
-        guessdt.setBackgroundResource(R.drawable.brown6);
+        guessdt.setBackgroundResource(R.drawable.guess_display_label);
         guessdt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        guessdt.setGravity(Gravity.CENTER);
+        guessdt.setTypeface(null, Typeface.BOLD);
 
 
         TextView resultdt = new TextView(this);
         resultdt.setText(result);
         resultdt.setLayoutParams(lpr);
-        resultdt.setBackgroundResource(R.drawable.brown6);
+        resultdt.setBackgroundResource(R.drawable.resuslt_display_label);
         resultdt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        resultdt.setGravity(Gravity.CENTER);
+        resultdt.setTypeface(null, Typeface.BOLD);
 
 
         display.addView(guessdt);
         display.addView(resultdt);
-        for(EditText edt: inputs){
+        for(Button edt: inputs){
             edt.setText("");
         }
         for(Button btn: keyPadButtons){
@@ -350,7 +350,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String clickedText = btn.getText().toString();
-                        EditText availableEdit = getEmptyEdit();
+                        Button availableEdit = getEmptyEdit();
                         if (availableEdit != null) {
                             availableEdit.setText(clickedText);
                             btn.setEnabled(false);
@@ -378,13 +378,13 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
     public void setInput() {
         int mag = 2;
-        int textWidth = (ScreenWidth - (7 * mag)) / 7;
+        int textWidth = (ScreenWidth - (7 * mag)) /14;
         int textHeight = (ScreenHeight) / 12;
-        gone.setInputType(InputType.TYPE_NULL);
-        gtwo.setInputType(InputType.TYPE_NULL);
-        gthree.setInputType(InputType.TYPE_NULL);
-        gfour.setInputType(InputType.TYPE_NULL);
-        gfive.setInputType(InputType.TYPE_NULL);
+//        gone.setInputType(InputType.TYPE_NULL);
+//        gtwo.setInputType(InputType.TYPE_NULL);
+//        gthree.setInputType(InputType.TYPE_NULL);
+//        gfour.setInputType(InputType.TYPE_NULL);
+//        gfive.setInputType(InputType.TYPE_NULL);
 
         gone.setHeight(textHeight);
         gone.setWidth(textWidth);
@@ -414,8 +414,8 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
 
 
-    public EditText getEmptyEdit() {
-        for (EditText edt : inputs) {
+    public Button getEmptyEdit() {
+        for (Button edt : inputs) {
             if (edt.getText().toString().isEmpty()) {
                 return edt;
             }
@@ -424,7 +424,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
     }
     private boolean inputFull(){
-        for(EditText edt:inputs){
+        for(Button edt:inputs){
             if(edt.getText().toString().isEmpty()){
                 return false;
             }

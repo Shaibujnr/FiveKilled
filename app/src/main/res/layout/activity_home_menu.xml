@@ -8,11 +8,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@android:color/white"
+    android:background="@drawable/brown8"
     tools:context="com.et.fivekilled.HomeMenu">
 
     <android.support.design.widget.FloatingActionButton
-        app:backgroundTint="@android:color/darker_gray"
+        app:backgroundTint="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/singlePlayerButton"
@@ -30,8 +30,8 @@
         app:backgroundTint="@android:color/darker_gray"
         android:layout_alignTop="@+id/singlePlayerButton"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="87dp"
-    <Helpers.fonts.EtTextView
+        android:layout_marginEnd="87dp" />
+    <Helpers.fonts.MenuTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="5KILLED"
@@ -42,5 +42,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="79dp"
         android:id="@+id/fk" />
+
 
 </RelativeLayout>
