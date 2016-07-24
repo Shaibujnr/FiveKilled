@@ -15,9 +15,11 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.et.fivekilled.FiveKilledActivity;
+import com.et.fivekilled.FourKilledActivity;
 import com.et.fivekilled.HomeMenu;
 import com.et.fivekilled.R;
-import com.et.fivekilled.SinglePlayerActivity;
+import com.et.fivekilled.SixKilledActivity;
 
 import Helpers.fonts.DefaultTextView;
 import Helpers.fonts.InGameTextView;
@@ -73,27 +75,28 @@ public class FiveKilledDialog extends DialogFragment {
     public AlertDialog prepareListedDialog(){
 
 
-        String[] mSelected = {"Beginners","Intermediate","Pro!"};
+        String[] mSelected = {"4Killed(Beginners)","5Killed(Intermediate)","6Killed(Pro!)"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setItems(mSelected,  new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(getActivity(), SinglePlayerActivity.class);
+
                 switch (which){
                     case 0:
+                        Intent i = new Intent(getActivity(), FourKilledActivity.class);
                         i.putExtra("difficulty",1);
                         startActivity(i);
                         break;
                     case 1:
-                        i.putExtra("difficulty",2);
-                        startActivity(i);
+                        Intent in = new Intent(getActivity(), FiveKilledActivity.class);
+                        in.putExtra("difficulty",2);
+                        startActivity(in);
                         break;
                     case 2:
-                        i.putExtra("difficulty",3);
-                        startActivity(i);
-
+                        Intent iin = new Intent(getActivity(), SixKilledActivity.class);
+                        startActivity(iin);
                         break;
                 }
             }

@@ -3,31 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".FiveKilledActivity"
-    android:id="@+id/root"
-    android:background="@drawable/brown8">
-    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
-
+    android:background="@drawable/brown8"
+    android:id="@+id/six_root"
+    tools:context="com.et.fivekilled.SixKilledActivity">
     <Chronometer
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/timer"
+        android:id="@+id/six_timer"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/timer"
-        android:id="@+id/input_container">
+        android:layout_below="@id/six_timer"
+        android:id="@+id/six_input_container">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gone"
+            android:id="@+id/six_gone"
             android:layout_marginTop="37dp"
             android:textAlignment="center"
             android:layout_margin="2dp"
@@ -36,7 +31,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gtwo"
+            android:id="@+id/six_gtwo"
             android:textAlignment="center"
             android:layout_marginTop="37dp"
             android:layout_margin="2dp"
@@ -45,7 +40,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gthree"
+            android:id="@+id/six_gthree"
             android:layout_weight="1"
             android:textAlignment="center"
             android:layout_marginTop="37dp"
@@ -54,7 +49,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gfour"
+            android:id="@+id/six_gfour"
             android:textAlignment="center"
             android:layout_weight="1"
             android:layout_marginTop="37dp"
@@ -63,7 +58,16 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gfive"
+            android:id="@+id/six_gfive"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:layout_marginTop="37dp"
+            android:layout_margin="2dp"
+            android:background="@drawable/input_buttons"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/six_gsix"
             android:textAlignment="center"
             android:layout_weight="1"
             android:layout_marginTop="37dp"
@@ -74,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SUBMIT"
-            android:id="@+id/btnSubmit"
+            android:id="@+id/six_btnSubmit"
             android:layout_weight="0.5"
             android:enabled="false"
             android:background="#8d6e63" />
@@ -89,9 +93,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sv"
-        android:layout_below="@+id/input_container"
-        android:layout_above="@+id/keyPad"
+        android:id="@+id/six_sv"
+        android:layout_below="@+id/six_input_container"
+        android:layout_above="@+id/six_keyPad"
         android:fillViewport="false">
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -100,7 +104,7 @@
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/display"
+                android:id="@+id/six_display"
                 android:columnCount="2">
 
             </GridLayout>
@@ -110,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/keyPad"
+        android:id="@+id/six_keyPad"
         android:background="@android:color/transparent">
 
     </GridLayout>
@@ -120,7 +124,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Guesses: 0"
-        android:id="@+id/trials_label"
+        android:id="@+id/six_trials_label"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"/>
