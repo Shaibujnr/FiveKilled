@@ -22,26 +22,36 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/multiPlayerButton"
-        android:src="@drawable/multi"
-        app:backgroundTint="@android:color/darker_gray"
-        android:layout_alignTop="@+id/singlePlayerButton"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="87dp" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/multiPlayerButton"-->
+        <!--android:src="@drawable/multi"-->
+        <!--app:backgroundTint="@android:color/darker_gray"-->
+        <!--android:layout_alignTop="@+id/singlePlayerButton"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_marginEnd="87dp" />-->
     <Helpers.fonts.EtTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5KILLED"
+        android:text="ALPHAKILL"
         android:textColor="@android:color/black"
-        android:textSize="80dp"
+        android:textSize="70dp"
         android:textStyle="italic"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="79dp"
         android:id="@+id/fk" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@android:color/darker_gray"
+        android:src="@android:drawable/ic_dialog_info"
+        android:id="@+id/helpButton"
+        android:elevation="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

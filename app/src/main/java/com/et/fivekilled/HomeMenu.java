@@ -20,9 +20,10 @@ import Helpers.FiveKilledDialog;
 import Helpers.fonts.MenuTextView;
 
 
-public class HomeMenu extends AppCompatActivity {
+public class HomeMenu extends NoStatusBarActivity {
     FloatingActionButton spbtn;
     FloatingActionButton mpbtn;
+    FloatingActionButton hbtn;
     FragmentManager fm;
     Bundle Dialogargs;
     EtTextView FiveKilled;
@@ -31,8 +32,6 @@ public class HomeMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home_menu);
         anim_flash = AnimationUtils.loadAnimation(this, R.anim.anim_flash);
         anim_bounce = AnimationUtils.loadAnimation(this, R.anim.anim_bounce);
@@ -45,8 +44,16 @@ public class HomeMenu extends AppCompatActivity {
         FiveKilled = (EtTextView) findViewById(R.id.fk);
         FiveKilled.setAnimation(anim_bounce);
        spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
+        hbtn = (FloatingActionButton) findViewById(R.id.helpButton);
 
        // mpbtn = (FloatingActionButton) findViewById(R.id.multiPlayerButton);
+        hbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeMenu.this,HelpActivity.class);
+                startActivity(i);
+            }
+        });
         spbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +63,7 @@ public class HomeMenu extends AppCompatActivity {
                 Dialogargs.putInt("DialogType",1);
                 fk.setArguments(Dialogargs);
                 fk.show(fm,"");
-//                Intent i = new Intent(HomeMenu.this,SinglePlayerActivity.class);
+//                Intent i = new Intent(HomeMenu.this,FiveKilledActivity.class);
 //                startActivity(i);
             }
         });

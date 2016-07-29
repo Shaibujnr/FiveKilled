@@ -1,6 +1,5 @@
 package com.et.fivekilled;
 
-
 import android.content.Intent;
 
 import android.app.FragmentManager;
@@ -22,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
@@ -36,23 +36,25 @@ import Helpers.Constants;
 import Helpers.CountDownHelper;
 import Helpers.FiveKilledHelper;
 import Helpers.FiveKilledDialog;
+import Helpers.InputListener;
+import Helpers.InputTextWatcher;
 import Helpers.StaticHelpers;
+import Helpers.InputTextWatcher;
 
-public class SinglePlayerActivity extends AppCompatActivity {
+public class SixKilledActivity extends NoStatusBarActivity {
 
 
     int difficultySelected;
     int number_of_calls = 0;
 
 
-    DisplayMetrics dm = new DisplayMetrics();
-    int ScreenHeight;
-    int ScreenWidth;
 
 
-    TextView timeLabel;
-//    EditText gone, gtwo, gthree, gfour, gfive;
-    Button gone, gtwo, gthree, gfour, gfive;
+
+    Chronometer timeLabel;
+    //    EditText gone, gtwo, gthree, gfour, gfive;
+    Button gone, gtwo, gthree, gfour, gfive,gsix;
+    TextView trialLabel;
 
     GridLayout display;
     GridLayout keyPad;
@@ -65,7 +67,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
     FiveKilledDialog fkDialog;
     Bundle dialogArgs;
     FiveKilledHelper fk;
-//    ArrayList<EditText> inputs;
+    //    ArrayList<EditText> inputs;
     ArrayList<Button> inputs;
     ArrayList<Button> keyPadButtons;
 
@@ -83,103 +85,62 @@ public class SinglePlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_single_player);
+        setContentView(R.layout.activity_six_killed);
         fkDialog = new FiveKilledDialog();
         dialogArgs = new Bundle();
         fk = new FiveKilledHelper();
         fm = getFragmentManager();
-//        inputs = new ArrayList<EditText>();
         inputs = new ArrayList<Button>();
         keyPadButtons = new ArrayList<Button>();
 
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        keyAlphs = fk.generateKeyAlphs(12);
-        ComSpecialNumbers = fk.generateSpecialAlphs(5,keyAlphs);
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        ScreenHeight = dm.heightPixels;
-        ScreenWidth = dm.widthPixels;
+        keyAlphs = fk.generateKeyAlphs(Constants.SIXKILLED_POOL_NUMBERS);
+        ComSpecialNumbers = fk.generateSpecialAlphs(Constants.SIXKILLED_SPECIAL_NUMBERS,keyAlphs);
 
-        gone = (Button) findViewById(R.id.gone);
+        gone = (Button) findViewById(R.id.six_gone);
         inputs.add(gone);
-        gtwo = (Button) findViewById(R.id.gtwo);
+        gtwo = (Button) findViewById(R.id.six_gtwo);
         inputs.add(gtwo);
-        gthree = (Button) findViewById(R.id.gthree);
+        gthree = (Button) findViewById(R.id.six_gthree);
         inputs.add(gthree);
-        gfour = (Button) findViewById(R.id.gfour);
+        gfour = (Button) findViewById(R.id.six_gfour);
         inputs.add(gfour);
-        gfive = (Button) findViewById(R.id.gfive);
+        gfive = (Button) findViewById(R.id.six_gfive);
         inputs.add(gfive);
+        gsix = (Button) findViewById(R.id.six_gsix);
+        inputs.add(gsix);
 
 
-        display = (GridLayout) findViewById(R.id.display);
-        keyPad = (GridLayout) findViewById(R.id.keyPad);
-        timeLabel = (TextView) findViewById(R.id.timer);
-        root = (RelativeLayout) findViewById(R.id.root);
-        sview = (ScrollView) findViewById(R.id.sv);
+
+        display = (GridLayout) findViewById(R.id.six_display);
+        keyPad = (GridLayout) findViewById(R.id.six_keyPad);
+        root = (RelativeLayout) findViewById(R.id.six_root);
+        sview = (ScrollView) findViewById(R.id.six_sv);
+        trialLabel = (TextView) findViewById(R.id.six_trials_label);
 
 
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        timeLabel = (Chronometer) findViewById(R.id.six_timer);
+        timeLabel.start();
+        btnSubmit = (Button) findViewById(R.id.six_btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                fk.createInGameDialog(SinglePlayerActivity.this, fm, "This is a test String");
-                handleSubmit();
-
-        Intent i = getIntent();
-        int difficulty = i.getIntExtra("difficulty",0);
-        fk.tst(""+difficulty,getApplicationContext());
-    }
-
-});
-
-
-
-
-        inputListener = new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
-                Button clickedInput= (Button) view;
-                String clickedText = clickedInput.getText().toString();
-                clickedInput.setText("");
-
-                for (Button btn : keyPadButtons) {
-                    if (btn.getText().toString().equals(clickedText)) {
-                        btn.setEnabled(true);
-                    }
-                }
-
-
+                handleSubmit();
+                fk.tst(ComSpecialNumbers,getApplicationContext());
             }
-        };
-
-        inputTextWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        });
 
 
-            }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(inputFull()){
-                    btnSubmit.setEnabled(true);
-                }else{
-                    btnSubmit.setEnabled(false);
-                }
 
-            }
-        };
 
-        setTimeFromDifficulty();
+
+        inputListener = new InputListener(keyPadButtons);
+
+        inputTextWatcher = new InputTextWatcher(btnSubmit,inputs);
+
         setKeyAlphs(keyAlphs);
         setInput();
+        setTrialLabel();
 
         mPlayer = MediaPlayer.create(getApplicationContext(),R.raw.clockbg);
         mPlayer.start();
@@ -188,14 +149,28 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
     }
 
+    private void setTrialLabel() {
+        switch(difficultySelected){
+            case 1:
+                trialLabel.setText("0"+"/"+Constants.DIFFICULTY_EASY_TRIALS);
+                break;
+            case 2:
+                trialLabel.setText("0"+"/"+Constants.DIFFICULTY_MEDIUM_TRIALS);
+                break;
+            case 3:
+                trialLabel.setText("0"+"/"+Constants.DIFFICULTY_HARD_TRIALS);
+                break;
+        }
+    }
+
     private void handleSubmit() {
-        number_of_calls++;
         int displayMag = 2;
         GridLayout.LayoutParams lpg = new GridLayout.LayoutParams();
         GridLayout.LayoutParams lpr = new GridLayout.LayoutParams();
 
-        lpg.height= (ScreenHeight-keyPad.getHeight()-gone.getHeight()-timeLabel.getHeight())/8;
-        lpg.width = (ScreenWidth-(displayMag*4))/2;
+        lpg.height= (NoStatusBarActivity.ScreenHeight-keyPad.getHeight()-
+                gone.getHeight()-timeLabel.getHeight())/8;
+        lpg.width = (NoStatusBarActivity.ScreenWidth-(displayMag*4))/2;
         lpg.columnSpec = GridLayout.spec(0);
         lpg.setMargins(0,0,0,0);
 
@@ -233,6 +208,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
         display.addView(guessdt);
         display.addView(resultdt);
+        updateTrials();
         for(Button edt: inputs){
             edt.setText("");
         }
@@ -248,54 +224,38 @@ public class SinglePlayerActivity extends AppCompatActivity {
         String resultString="";
 
         if(fk.isWin(result)){
-            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(difficultySelected),"600");
+            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(difficultySelected),calculateScore());
         }
 
 
 
     }
 
-    private void setTimeFromDifficulty() {
-        Intent hmIntent = getIntent();
-        String txt;
-        long duration;
-        difficultySelected = hmIntent.getIntExtra("difficulty",0);
-        switch (difficultySelected){
-            case 1:
-                duration = convertDifficultyToMillis(Constants.DIFFICULTY_EASY_TIME);
-                txt = StaticHelpers.getTimeFormat(duration);
-                timeLabel.setText(txt);
-                cdHelper = new CountDownHelper(duration,1000,timeLabel,this);
-                cdHelper.start();
-                break;
-            case 2:
-                duration = convertDifficultyToMillis(Constants.DIFFICULTY_MEDIUM_TIME);
-                txt = StaticHelpers.getTimeFormat(duration);
-                timeLabel.setText(txt);
-                cdHelper = new CountDownHelper(duration,1000,timeLabel,this);
-                cdHelper.start();
-                break;
-            case 3:
-                duration = convertDifficultyToMillis(Constants.DIFFICULTY_HARD_TIME);
-                txt = StaticHelpers.getTimeFormat(duration);
-                timeLabel.setText(txt);
-                cdHelper = new CountDownHelper(duration,1000,timeLabel,this);
-                cdHelper.start();
-                break;
-        }
+    private String calculateScore() {
+        long secondsLeft = getTimeFromDifficultyInSeconds(difficultySelected)-Long.parseLong(getTimeUsed(difficultySelected));
+        long trialsLeft = getTrailsFromDifficulty(difficultySelected);
+        long score = secondsLeft+trialsLeft;
+        return String.valueOf(score);
     }
 
-    private long convertDifficultyToMillis(long difficulty){
-        return difficulty * 60000;
-
+    private void updateTrials() {
+        number_of_calls++;
+        trialLabel.setText("Guesses: "+number_of_calls);
     }
+
+    private void EndGame() {
+        Toast.makeText(this,"Game has ended trials used up",Toast.LENGTH_SHORT).show();
+    }
+
+
+
 
 
 
 
     public void setKeyAlphs(String alphs) {
-        int mag = 2;
-        int row = 2;
+        int mag = Constants.KEYPAD_MARGIN_SIZE;
+        int row = Constants.KEYPAD_BUTTON_ROWS;
         int col = (alphs.length() / row);
 
 
@@ -304,14 +264,14 @@ public class SinglePlayerActivity extends AppCompatActivity {
                 GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
 
                 lp.setMargins(mag, mag, mag, mag);
-                lp.height = ScreenHeight / 10;
-                lp.width = (ScreenWidth - (mag * (col + 3))) / col;
+                lp.height = NoStatusBarActivity.KeyPadHeight;
+                lp.width = (NoStatusBarActivity.ScreenWidth - (mag * (col + 3))) / col;
                 lp.rowSpec = GridLayout.spec(i);
                 lp.columnSpec = GridLayout.spec(j);
                 final Button btn = new Button(this);
                 btn.setLayoutParams(lp);
                 btn.setBackgroundResource(R.drawable.keypad_button);
-                btn.setText(String.valueOf(alphs.charAt(((6 * i) + j))));
+                btn.setText(String.valueOf(alphs.charAt(((col * i) + j))));
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -337,8 +297,8 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
     public void setInput() {
         int mag = 2;
-        int textWidth = (ScreenWidth - (7 * mag)) /14;
-        int textHeight = (ScreenHeight) / 12;
+        int textWidth = (NoStatusBarActivity.ScreenWidth - (7 * mag)) /14;
+        int textHeight = (NoStatusBarActivity.ScreenHeight) / 12;
 
 
 
@@ -369,6 +329,12 @@ public class SinglePlayerActivity extends AppCompatActivity {
         gfive.setWidth(textWidth);
         gfive.setOnClickListener(inputListener);
         gfive.addTextChangedListener(inputTextWatcher);
+
+        gsix.setHeight(textHeight);
+        gsix.setWidth(textWidth);
+        gsix.setOnClickListener(inputListener);
+        gsix.addTextChangedListener(inputTextWatcher);
+
     }
 
 
@@ -382,14 +348,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         return null;
 
     }
-    private boolean inputFull(){
-        for(Button edt:inputs){
-            if(edt.getText().toString().isEmpty()){
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     private String getTimeUsed(int dif){
         String remainingTime = timeLabel.getText().toString();
@@ -419,5 +378,31 @@ public class SinglePlayerActivity extends AppCompatActivity {
 
 
     }
+    private long getTimeFromDifficultyInSeconds(int dif){
+        long time = 0;
+        switch(dif){
+            case 1:
+                time= Constants.DIFFICULTY_EASY_TIME*60;
+            case 2:
+                time= Constants.DIFFICULTY_MEDIUM_TIME*60;
+            case 3:
+                time= Constants.DIFFICULTY_HARD_TIME*60;
+        }
+        return time;
+    }
+    private long getTrailsFromDifficulty(int dif){
+        long trial = 0;
+        switch(dif) {
+            case 1:
+                trial =  Constants.DIFFICULTY_EASY_TRIALS;
+            case 2:
+                trial =  Constants.DIFFICULTY_MEDIUM_TRIALS;
+            case 3:
+                trial =  Constants.DIFFICULTY_HARD_TRIALS;
+        }
+        return trial;
+
+    }
+
 }
 

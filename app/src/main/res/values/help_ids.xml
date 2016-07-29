@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--admob ids-->
+    <string name="admob_app_id">ca-app-pub-1565556150226006~9483348579</string>
+    <string name="admob_banner_adunit_id">ca-app-pub-1565556150226006/1960081773</string>
+    <!--leaderboard ids-->
+    <string name="appId">103924023387</string>
+    <string name="four_guess_lbid">CgkI24DrkoMDEAIQAg</string>
+    <string name="four_time_lbid">CgkI24DrkoMDEAIQBQ</string>
+    <string name="five_guess_lbid">CgkI24DrkoMDEAIQAw</string>
+    <string name="five_time_lbid">CgkI24DrkoMDEAIQBg</string>
+    <string name="six_guess_lbid">CgkI24DrkoMDEAIQBA</string>
+    <string name="six_time_lbid">CgkI24DrkoMDEAIQBw</string>
+    <!--achievement ids-->
+
+</resources>
