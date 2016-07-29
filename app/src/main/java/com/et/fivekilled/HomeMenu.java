@@ -14,20 +14,28 @@ import Helpers.fonts.EtTextView;
 import Helpers.fonts.MenuTextView;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameActivity;
 
 import Helpers.FiveKilledDialog;
 
 import Helpers.fonts.MenuTextView;
 
 
-public class HomeMenu extends NoStatusBarActivity {
+public class HomeMenu extends BaseGameActivity {
     FloatingActionButton spbtn;
     FloatingActionButton mpbtn;
     FloatingActionButton hbtn;
+    FloatingActionButton showLeaderBoardButton;
+    FloatingActionButton soutButton;
     FragmentManager fm;
     Bundle Dialogargs;
     EtTextView FiveKilled;
     Animation anim_bounce, anim_flash,anim_sway;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +51,43 @@ public class HomeMenu extends NoStatusBarActivity {
         fm = getFragmentManager();
         FiveKilled = (EtTextView) findViewById(R.id.fk);
         FiveKilled.setAnimation(anim_bounce);
-       spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
+        spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
         hbtn = (FloatingActionButton) findViewById(R.id.helpButton);
+        showLeaderBoardButton = (FloatingActionButton) findViewById(R.id.lboardButton);
+        soutButton = (FloatingActionButton) findViewById(R.id.soutButton);
+
+        soutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getApiClient().isConnected()){
+                    signOut();
+                    Toast.makeText(HomeMenu.this,"Sign out done",Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+                    beginUserInitiatedSignIn();
+
+                }
+
+
+            }
+        });
+
+        showLeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getApiClient().isConnected()){
+                    Toast.makeText(HomeMenu.this,"Displaying leaderBoard",Toast.LENGTH_SHORT).show();
+                    startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(getApiClient()),2);
+                }
+                else{
+
+                }
+
+
+
+            }
+        });
 
        // mpbtn = (FloatingActionButton) findViewById(R.id.multiPlayerButton);
         hbtn.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +106,20 @@ public class HomeMenu extends NoStatusBarActivity {
                 Dialogargs.putInt("DialogType",1);
                 fk.setArguments(Dialogargs);
                 fk.show(fm,"");
-//                Intent i = new Intent(HomeMenu.this,FiveKilledActivity.class);
-//                startActivity(i);
+
             }
         });
+    }
+
+    @Override
+    public void onSignInFailed() {
+        Toast.makeText(this,"sign in failed: unable to sign in",Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onSignInSucceeded() {
+        Toast.makeText(this,"Sign in succesful",Toast.LENGTH_SHORT).show();
+
     }
 }

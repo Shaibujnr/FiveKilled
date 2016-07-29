@@ -156,11 +156,19 @@ public class FiveKilledHelper {
         fkDialog.show(fm,"");
     } public void createWinDialog( FragmentManager fm, String No_of_calls, String time_taken,String score){
         FiveKilledDialog fkDialog = new FiveKilledDialog();
+        fkDialog.setCancelable(false);
         Bundle dialogArgs = new Bundle();
         dialogArgs.putInt("DialogType",3);
         dialogArgs.putString("noc",No_of_calls);
         dialogArgs.putString("tt",time_taken);
         dialogArgs.putString("score",score);
+        fkDialog.setArguments(dialogArgs);
+        fkDialog.show(fm,"");
+    }
+    public void createBackButtonDialog(FragmentManager fm){
+        FiveKilledDialog fkDialog = new FiveKilledDialog();
+        Bundle dialogArgs = new Bundle();
+        dialogArgs.putInt("DialogType",4);
         fkDialog.setArguments(dialogArgs);
         fkDialog.show(fm,"");
     }
@@ -172,8 +180,8 @@ public class FiveKilledHelper {
         return String.format("%dk %di %dn",killed,injured,none);
     }
 
-    public boolean isWin(String result){
-        if(result.equals("5k 0i 0n")){
+    public boolean isWin(String result,int type){
+        if(result.equals(""+type+"k 0i 0n")){
             return true;
         }
         else{

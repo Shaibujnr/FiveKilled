@@ -18,11 +18,32 @@
         android:id="@+id/timer"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sv"
+        android:layout_below="@+id/timer"
+        android:fillViewport="false"
+        android:layout_above="@+id/input_container">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hsv">
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/display"
+                android:columnCount="2">
+
+            </GridLayout>
+        </HorizontalScrollView>
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/timer"
+        android:layout_above="@+id/keyPad"
         android:id="@+id/input_container">
         <Button
             android:layout_width="wrap_content"
@@ -82,30 +103,6 @@
 
     </LinearLayout>
 
-
-
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sv"
-        android:layout_below="@+id/input_container"
-        android:layout_above="@+id/keyPad"
-        android:fillViewport="false">
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/hsv">
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/display"
-                android:columnCount="2">
-
-            </GridLayout>
-        </HorizontalScrollView>
-    </ScrollView>
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

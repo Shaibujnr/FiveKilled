@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,7 +30,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.example.games.basegameutils.BaseGameActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 import Helpers.Constants;
@@ -41,7 +47,7 @@ import Helpers.InputTextWatcher;
 import Helpers.StaticHelpers;
 import Helpers.InputTextWatcher;
 
-public class SixKilledActivity extends NoStatusBarActivity {
+public class SixKilledActivity extends BaseGameActivity {
 
 
     int difficultySelected;
@@ -168,9 +174,9 @@ public class SixKilledActivity extends NoStatusBarActivity {
         GridLayout.LayoutParams lpg = new GridLayout.LayoutParams();
         GridLayout.LayoutParams lpr = new GridLayout.LayoutParams();
 
-        lpg.height= (NoStatusBarActivity.ScreenHeight-keyPad.getHeight()-
+        lpg.height= (BaseGameActivity.ScreenHeight-keyPad.getHeight()-
                 gone.getHeight()-timeLabel.getHeight())/8;
-        lpg.width = (NoStatusBarActivity.ScreenWidth-(displayMag*4))/2;
+        lpg.width = (BaseGameActivity.ScreenWidth-(displayMag*4))/2;
         lpg.columnSpec = GridLayout.spec(0);
         lpg.setMargins(0,0,0,0);
 
@@ -223,20 +229,20 @@ public class SixKilledActivity extends NoStatusBarActivity {
         });
         String resultString="";
 
-        if(fk.isWin(result)){
-            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(difficultySelected),calculateScore());
+        if(fk.isWin(result,Constants.SIXKILLED_SPECIAL_NUMBERS)){
+            timeLabel.stop();
+            hideAllButtons();
+            String tis = convertToSeconds(getTimeUsed());
+            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds");
+
+
+
         }
 
 
 
     }
 
-    private String calculateScore() {
-        long secondsLeft = getTimeFromDifficultyInSeconds(difficultySelected)-Long.parseLong(getTimeUsed(difficultySelected));
-        long trialsLeft = getTrailsFromDifficulty(difficultySelected);
-        long score = secondsLeft+trialsLeft;
-        return String.valueOf(score);
-    }
 
     private void updateTrials() {
         number_of_calls++;
@@ -264,8 +270,8 @@ public class SixKilledActivity extends NoStatusBarActivity {
                 GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
 
                 lp.setMargins(mag, mag, mag, mag);
-                lp.height = NoStatusBarActivity.KeyPadHeight;
-                lp.width = (NoStatusBarActivity.ScreenWidth - (mag * (col + 3))) / col;
+                lp.height = BaseGameActivity.KeyPadHeight;
+                lp.width = (BaseGameActivity.ScreenWidth - (mag * (col + 3))) / col;
                 lp.rowSpec = GridLayout.spec(i);
                 lp.columnSpec = GridLayout.spec(j);
                 final Button btn = new Button(this);
@@ -297,8 +303,8 @@ public class SixKilledActivity extends NoStatusBarActivity {
 
     public void setInput() {
         int mag = 2;
-        int textWidth = (NoStatusBarActivity.ScreenWidth - (7 * mag)) /14;
-        int textHeight = (NoStatusBarActivity.ScreenHeight) / 12;
+        int textWidth = (BaseGameActivity.ScreenWidth - (7 * mag)) /14;
+        int textHeight = (BaseGameActivity.ScreenHeight) / 12;
 
 
 
@@ -350,59 +356,79 @@ public class SixKilledActivity extends NoStatusBarActivity {
     }
 
 
-    private String getTimeUsed(int dif){
-        String remainingTime = timeLabel.getText().toString();
-        String[] rtminSec = remainingTime.split(":");
-        long rMinute = Long.parseLong(rtminSec[0]);
-        long rSec = Long.parseLong(rtminSec[1]);
-        long rTotalSec = (rMinute*60)+rSec;
-        long initialTime=0;
-        switch(dif){
-            case 1:
-                initialTime = Constants.DIFFICULTY_EASY_TIME;
-                break;
-            case 2:
-                initialTime = Constants.DIFFICULTY_MEDIUM_TIME;
-                break;
-            case 3:
-                initialTime = Constants.DIFFICULTY_HARD_TIME;
-                break;
-        }
-        long initialTimeInSeconds = initialTime*60;
-        long totalSecondsUsed = initialTimeInSeconds - rTotalSec;
-        long mUsed = totalSecondsUsed/60;
-        long sUsed = totalSecondsUsed%60;
-
-        String MinutesUsed = String.valueOf(mUsed)+" : "+String.valueOf(sUsed);
-        return MinutesUsed;
-
-
-    }
-    private long getTimeFromDifficultyInSeconds(int dif){
-        long time = 0;
-        switch(dif){
-            case 1:
-                time= Constants.DIFFICULTY_EASY_TIME*60;
-            case 2:
-                time= Constants.DIFFICULTY_MEDIUM_TIME*60;
-            case 3:
-                time= Constants.DIFFICULTY_HARD_TIME*60;
-        }
-        return time;
-    }
-    private long getTrailsFromDifficulty(int dif){
-        long trial = 0;
-        switch(dif) {
-            case 1:
-                trial =  Constants.DIFFICULTY_EASY_TRIALS;
-            case 2:
-                trial =  Constants.DIFFICULTY_MEDIUM_TRIALS;
-            case 3:
-                trial =  Constants.DIFFICULTY_HARD_TRIALS;
-        }
-        return trial;
+    private String getTimeUsed(){
+       return timeLabel.getText().toString();
 
     }
 
+    public void setInReviewMode(){
+        hideAllButtons();
+        final Button doneFab = new Button(this);
+        doneFab.setText(R.string.review_done_buton);
+        doneFab.setBackgroundResource(R.drawable.dialog_edge);
+        doneFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),"400");
+                doneFab.setVisibility(View.INVISIBLE);
+            }
+        });
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        rlp.addRule(RelativeLayout.ABOVE,R.id.six_keyPad);
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        rlp.setMargins(0,0,40,0);
+        rlp.width = root.getWidth()/4;
+        rlp.height = root.getHeight()/10;
+        root.addView(doneFab,rlp);
+
+    }
+    private void hideAllButtons(){
+        for(Button btn : inputs){
+            btn.setVisibility(View.INVISIBLE);
+        }
+        for(Button btn : keyPadButtons){
+            btn.setVisibility(View.INVISIBLE);
+        }
+        btnSubmit.setVisibility(View.INVISIBLE);
+
+    }
+
+    public String convertToSeconds(String time){
+        String[] parts = time.split(":");
+        String result = "";
+        switch(parts.length){
+            case 3:
+                int hour = Integer.parseInt(parts[0]);
+                int minute = Integer.parseInt(parts[1]);
+                int sec = Integer.parseInt(parts[2]);
+                result = String.valueOf((hour*60*60)+(minute*60)+sec);
+                break;
+            case 2:
+                int min = Integer.parseInt(parts[0]);
+                int secs = Integer.parseInt(parts[1]);
+                result = String.valueOf((min*60)+secs);
+                break;
+            case 1:
+                result = String.valueOf(parts[0]);
+                break;
+        }
+        return result;
+    }
+
+    @Override
+    public void onBackPressed() {
+        fk.createBackButtonDialog(getFragmentManager());
+    }
+
+    @Override
+    public void onSignInFailed() {
+
+    }
+
+    @Override
+    public void onSignInSucceeded() {
+
+    }
 }
 

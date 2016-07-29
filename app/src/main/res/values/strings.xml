@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">AlphaKill</string>
+    <string name="review_done_buton">Done Reviewing</string>
     <string name="help_one">1.AIM OF THE GAME\n\n
         The aim of the game is to guess accurately(position included) a set of five characters chosen
         from a pool of twelve characters.
