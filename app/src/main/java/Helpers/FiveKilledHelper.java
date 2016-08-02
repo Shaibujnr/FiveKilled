@@ -154,7 +154,7 @@ public class FiveKilledHelper {
         dialogArgs.putString("DialogMessage",message);
         fkDialog.setArguments(dialogArgs);
         fkDialog.show(fm,"");
-    } public void createWinDialog( FragmentManager fm, String No_of_calls, String time_taken,String score){
+    } public void createWinDialog( FragmentManager fm, String No_of_calls, String time_taken,String score,boolean irs){
         FiveKilledDialog fkDialog = new FiveKilledDialog();
         fkDialog.setCancelable(false);
         Bundle dialogArgs = new Bundle();
@@ -162,6 +162,7 @@ public class FiveKilledHelper {
         dialogArgs.putString("noc",No_of_calls);
         dialogArgs.putString("tt",time_taken);
         dialogArgs.putString("score",score);
+        dialogArgs.putBoolean("is_record_set",irs);
         fkDialog.setArguments(dialogArgs);
         fkDialog.show(fm,"");
     }
@@ -187,6 +188,13 @@ public class FiveKilledHelper {
         else{
             return false;
         }
+    }
+    public void createBestRecordDialog(FragmentManager fm){
+        FiveKilledDialog fkDialog = new FiveKilledDialog();
+        Bundle dialogArgs = new Bundle();
+        dialogArgs.putInt("DialogType",5);
+        fkDialog.setArguments(dialogArgs);
+        fkDialog.show(fm,"");
     }
 
 

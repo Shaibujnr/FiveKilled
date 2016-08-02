@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.app.FragmentManager;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
@@ -31,7 +32,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
+import com.google.example.games.basegameutils.GameHelper;
 
 import java.util.ArrayList;
 
@@ -50,6 +54,7 @@ public class FourKilledActivity extends BaseGameActivity {
 
     int difficultySelected;
     int number_of_calls = 0;
+
 
 
 
@@ -90,6 +95,8 @@ public class FourKilledActivity extends BaseGameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four_killed);
+
+        getGameHelper().setMaxAutoSignInAttempts(0);
         fkDialog = new FiveKilledDialog();
         dialogArgs = new Bundle();
         fk = new FiveKilledHelper();
@@ -106,7 +113,11 @@ public class FourKilledActivity extends BaseGameActivity {
         inputs.add(gtwo);
         gthree = (Button) findViewById(R.id.four_gthree);
         inputs.add(gthree);
-        gfour = (Button) findViewById(R.id.four_gfour);
+        gfour = (Button) findViewById(
+
+
+
+                R.id.four_gfour);
         inputs.add(gfour);
 
 
@@ -125,7 +136,7 @@ public class FourKilledActivity extends BaseGameActivity {
             @Override
             public void onClick(View view) {
                 handleSubmit();
-                fk.tst(ComSpecialNumbers,getApplicationContext());
+//                fk.tst(ComSpecialNumbers,getApplicationContext());
             }
         });
 
@@ -145,6 +156,7 @@ public class FourKilledActivity extends BaseGameActivity {
         mPlayer = MediaPlayer.create(getApplicationContext(),R.raw.clockbg);
         mPlayer.start();
         mPlayer.setLooping(true);
+
 
 
     }
@@ -216,11 +228,29 @@ public class FourKilledActivity extends BaseGameActivity {
             timeLabel.stop();
             hideAllButtons();
             String tis = convertToSeconds(getTimeUsed());
-            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds");
+            boolean is_record_set = isHighScore(number_of_calls,tis);
+            implementHs(number_of_calls,tis);
+            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
+            if(getApiClient().isConnected()) {
+                submitScore(number_of_calls,Integer.parseInt(tis)*1000);
+            }
+            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=6){
+                unlockAchivement(getString(R.string.newton));
+            }
+            if(getApiClient().isConnected() && number_of_calls==1){
+                unlockAchivement(getString(R.string.casper));
+            }
+            if(getApiClient().isConnected() && Integer.parseInt(tis)<60){
+                unlockAchivement(getString(R.string.fast_finger));
+            }
         }
 
 
 
+    }
+
+    private void unlockAchivement(String string) {
+        Games.Achievements.unlock(getApiClient(),string);
     }
 
 
@@ -230,10 +260,68 @@ public class FourKilledActivity extends BaseGameActivity {
 
     }
 
-    private void EndGame() {
-        Toast.makeText(this,"Game has ended trials used up",Toast.LENGTH_SHORT).show();
+
+    private boolean isHighScore(int number_of_calls, String tis) {
+        if(AlphaApplication.getFourKilledTrialsHs(this)>=-1 &&
+                number_of_calls<AlphaApplication.getFourKilledTrialsHs(this)){
+
+            return true;
+        }
+        else if(AlphaApplication.getFourKilledTimeHs(this)>=-1 &&
+                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_trials_hs",number_of_calls);
+            return true;
+        }
+//        else if(AlphaApplication.getFourKilledTimeHs(this)!=-1 &&
+//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
+//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            return true;
+//
+//        }
+//        else if(AlphaApplication.getFourKilledTimeHs(this)==-1 &&
+//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            return true;
+//
+//        }
+//        else if(Integer.parseInt(tis)!=-1 &&
+//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
+//                number_of_calls<AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            editor.putInt("four_trials_hs",number_of_calls);
+//            return true;
+//
+//        }
+        return false;
     }
 
+    private void implementHs(int noc,String tis){
+        int cths = AlphaApplication.getFourKilledTimeHs(this);
+        int ctrhs = AlphaApplication.getFourKilledTrialsHs(this);
+        if(ctrhs!=-1 && noc<ctrhs){
+            AlphaApplication.setFourKilledTrialsHs(this,noc);
+        }
+        if(ctrhs==-1){
+            AlphaApplication.setFourKilledTrialsHs(this,noc);
+        }
+        if(cths!=-1 && Integer.parseInt(tis)<cths){
+            AlphaApplication.setFourKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
+        if(cths==-1){
+            AlphaApplication.setFourKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
+    }
 
 
 
@@ -350,16 +438,17 @@ public class FourKilledActivity extends BaseGameActivity {
         doneFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),"400");
+                String tis = convertToSeconds(getTimeUsed());
+                boolean is_record_set = isHighScore(number_of_calls,tis);
+                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
                 doneFab.setVisibility(View.INVISIBLE);
             }
         });
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rlp.addRule(RelativeLayout.ABOVE,R.id.four_keyPad);
-        rlp.setMargins(0,0,40,0);
-        rlp.width = root.getWidth()/4;
+        rlp.addRule(RelativeLayout.BELOW,R.id.four_sv);
+        rlp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        rlp.width = root.getWidth();
         rlp.height = root.getHeight()/10;
         root.addView(doneFab,rlp);
 
@@ -389,6 +478,11 @@ public class FourKilledActivity extends BaseGameActivity {
     public void onBackPressed() {
         fk.createBackButtonDialog(getFragmentManager());
     }
+    private void submitScore(int number_of_calls, int i) {
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.four_guess_lbid),number_of_calls);
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.four_time_lbid),i);
+    }
+
 
     @Override
     public void onSignInFailed() {

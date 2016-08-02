@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.app.FragmentManager;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
@@ -30,6 +31,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.text.ParseException;
@@ -47,11 +49,12 @@ import Helpers.InputTextWatcher;
 import Helpers.StaticHelpers;
 import Helpers.InputTextWatcher;
 
-public class SixKilledActivity extends BaseGameActivity {
+public class SixKilledActivity extends BaseGameActivity{
 
 
     int difficultySelected;
     int number_of_calls = 0;
+
 
 
 
@@ -92,6 +95,7 @@ public class SixKilledActivity extends BaseGameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_six_killed);
+        getGameHelper().setMaxAutoSignInAttempts(0);
         fkDialog = new FiveKilledDialog();
         dialogArgs = new Bundle();
         fk = new FiveKilledHelper();
@@ -131,7 +135,7 @@ public class SixKilledActivity extends BaseGameActivity {
             @Override
             public void onClick(View view) {
                 handleSubmit();
-                fk.tst(ComSpecialNumbers,getApplicationContext());
+//                fk.tst(ComSpecialNumbers,getApplicationContext());
             }
         });
 
@@ -181,8 +185,8 @@ public class SixKilledActivity extends BaseGameActivity {
         lpg.setMargins(0,0,0,0);
 
 
-        lpr.height= (ScreenHeight-keyPad.getHeight()-gone.getHeight()-timeLabel.getHeight())/8;
-        lpr.width = (ScreenWidth-(displayMag*4))/2;
+        lpr.height= (BaseGameActivity.ScreenHeight-keyPad.getHeight()-gone.getHeight()-timeLabel.getHeight())/8;
+        lpr.width = (BaseGameActivity.ScreenWidth-(displayMag*4))/2;
         lpr.columnSpec = GridLayout.spec(1);
         lpr.setMargins(0,0,0,0);
 
@@ -233,7 +237,21 @@ public class SixKilledActivity extends BaseGameActivity {
             timeLabel.stop();
             hideAllButtons();
             String tis = convertToSeconds(getTimeUsed());
-            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds");
+            boolean is_record_set = isHighScore(number_of_calls,tis);
+            implementHs(number_of_calls,tis);
+            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
+            if(getApiClient().isConnected()) {
+                submitScore(number_of_calls,Integer.parseInt(tis)*1000);
+            }
+            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=10){
+                unlockAchivement(getString(R.string.dexter));
+            }
+            if(getApiClient().isConnected() && number_of_calls==1){
+                unlockAchivement(getString(R.string.invincible));
+            }
+            if(getApiClient().isConnected() && Integer.parseInt(tis)<180){
+                unlockAchivement(getString(R.string.fastest_finger));
+            }
 
 
 
@@ -241,6 +259,10 @@ public class SixKilledActivity extends BaseGameActivity {
 
 
 
+
+    }
+    private void unlockAchivement(String string) {
+        Games.Achievements.unlock(getApiClient(),string);
     }
 
 
@@ -249,8 +271,10 @@ public class SixKilledActivity extends BaseGameActivity {
         trialLabel.setText("Guesses: "+number_of_calls);
     }
 
-    private void EndGame() {
-        Toast.makeText(this,"Game has ended trials used up",Toast.LENGTH_SHORT).show();
+
+    private void submitScore(int number_of_calls, int i) {
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.six_guess_lbid),number_of_calls);
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.six_time_lbid),i);
     }
 
 
@@ -369,16 +393,17 @@ public class SixKilledActivity extends BaseGameActivity {
         doneFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),"400");
+                String tis = convertToSeconds(getTimeUsed());
+                boolean is_record_set = isHighScore(number_of_calls,tis);
+                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
                 doneFab.setVisibility(View.INVISIBLE);
             }
         });
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT);
-        rlp.addRule(RelativeLayout.ABOVE,R.id.six_keyPad);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rlp.setMargins(0,0,40,0);
-        rlp.width = root.getWidth()/4;
+        rlp.addRule(RelativeLayout.BELOW,R.id.six_sv);
+        rlp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        rlp.width = root.getWidth();
         rlp.height = root.getHeight()/10;
         root.addView(doneFab,rlp);
 
@@ -421,6 +446,7 @@ public class SixKilledActivity extends BaseGameActivity {
         fk.createBackButtonDialog(getFragmentManager());
     }
 
+
     @Override
     public void onSignInFailed() {
 
@@ -430,5 +456,67 @@ public class SixKilledActivity extends BaseGameActivity {
     public void onSignInSucceeded() {
 
     }
+    private boolean isHighScore(int number_of_calls, String tis) {
+        if(AlphaApplication.getSixKilledTrialsHs(this)>=-1 &&
+                number_of_calls<AlphaApplication.getSixKilledTrialsHs(this)){
+
+            return true;
+        }
+        else if(AlphaApplication.getSixKilledTimeHs(this)>=-1 &&
+                Integer.parseInt(tis)<AlphaApplication.getSixKilledTimeHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_trials_hs",number_of_calls);
+            return true;
+        }
+//        else if(AlphaApplication.getFourKilledTimeHs(this)!=-1 &&
+//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
+//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            return true;
+//
+//        }
+//        else if(AlphaApplication.getFourKilledTimeHs(this)==-1 &&
+//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            return true;
+//
+//        }
+//        else if(Integer.parseInt(tis)!=-1 &&
+//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
+//                number_of_calls<AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            editor.putInt("four_trials_hs",number_of_calls);
+//            return true;
+//
+//        }
+        return false;
+    }
+
+    private void implementHs(int noc,String tis){
+        int cths = AlphaApplication.getSixKilledTimeHs(this);
+        int ctrhs = AlphaApplication.getSixKilledTrialsHs(this);
+        if(ctrhs!=-1 && noc<ctrhs){
+            AlphaApplication.setSixKilledTrialsHs(this,noc);
+        }
+        if(ctrhs==-1){
+            AlphaApplication.setSixKilledTrialsHs(this,noc);
+        }
+        if(cths!=-1 && Integer.parseInt(tis)<cths){
+            AlphaApplication.setSixKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
+        if(cths==-1){
+            AlphaApplication.setSixKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
+    }
+
 }
 

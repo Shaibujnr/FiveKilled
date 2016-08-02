@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_title">HOW TO PLAY</string>
+    <string name="help_one">1. <b>AIM OF THE GAME</b>\nThe aim of the game is to guess accurately(in letter and position) a set
+    of letters chosen from a pool of a larger number of letters. The
+    number of characters to be guessed depends on the game difficulty selected\n
+    4 for 4killed\n5 for 5killed;and\n6 for 6killed\n</string>
+    <string name="help_two">2. <b>THE POOL AND KEYPAD</b>\nThe pool is the larger number of letters referred to in 1 where the letters to
+    be guessed are selected from. The keypad in the game screen shows all the letters
+    contained in the pool</string>
+
+    <string name="help_three">3. <b>SPECIAL ALPHAS</b>\nThe computer picks a certain number of letters(depending on game difficulty)
+    on game start from the pool and keeps these selected letters hidden through out the
+    session of the game. These letters are referred to as <b><i>SPECIAL ALPHAS</i></b>. These letters
+    do not change through out the session of the game.</string>
+
+    <string name="help_four">4. <b>GAME START</b>\nCounter starts counting and the special alphas are picked.</string>
+
+    <string name="help_five">5. <b>MAKE A GUESS</b>\nClick on a letter on the keypad to add that letter to the input. When the inputs
+    are full, click on the submit button to make a guess</string>
+
+    <string name="help_six">6. <b>DISPLAY AND RESULT</b>\nAfter submitting the screen is updated with your guess on the left and result on the
+    right. The result appears in form of \'nk ni nn\'</string>
+
+    <string name="help_seven">7. <b><i>k</i> KILLED</b>\nThe \'k\' in \'nk\' as displayed in the result stands for killed. This means
+    \'n\' letters were guessed correctly. 4killed for example,let special alphas be \'ASDF\'
+    and let your guess be \'BSUF\', \'S\' and \'F\' were guessed correctly in both letter and position
+    therefore the result will be in form \'2k ni nn\'</string>
+
+    <string name="help_eight">8. <b><i>i</i> INJURED</b>\nThe \'i\' in \'ni\' as displayed in the result stands for INJURED. This means
+    \'n\' letters were guessed correctly but their postions are guessed wrongly.
+    4killed for example,let special alphas be \'ASDF\'
+    and let your guess be \'SBUF\', \'S\' and \'F\' were guessed correctly in letter but the postion of
+    \'S\' in the guess does not match that of the special alphas. Therefore the result will be in
+    the form \'1k 1i nn\'</string>
+
+    <string name="help_nine">9. <b><i>n</i> NONE</b>\nThe \'n\' in \'nn\' as displayed in the result stands for NONE. This means
+    \'n\' letters in the guess are not present in the special alphas.
+    4killed for example,let special alphas be \'ASDF\'
+    and let your guess be \'SBUF\', \'B\' and \'U\' are not contained in the special alphas
+    .Therefore the result will be in the form \'1k 1i 2n\'</string>
+
+</resources>

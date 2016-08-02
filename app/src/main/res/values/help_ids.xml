@@ -5,12 +5,21 @@
     <string name="admob_banner_adunit_id">ca-app-pub-1565556150226006/1960081773</string>
     <!--leaderboard ids-->
     <string name="appId">103924023387</string>
-    <string name="four_guess_lbid">CgkI24DrkoMDEAIQAg</string>
-    <string name="four_time_lbid">CgkI24DrkoMDEAIQBQ</string>
-    <string name="five_guess_lbid">CgkI24DrkoMDEAIQAw</string>
-    <string name="five_time_lbid">CgkI24DrkoMDEAIQBg</string>
-    <string name="six_guess_lbid">CgkI24DrkoMDEAIQBA</string>
-    <string name="six_time_lbid">CgkI24DrkoMDEAIQBw</string>
+    <string name="four_guess_lbid">CgkI24DrkoMDEAIQBQ</string>
+    <string name="four_time_lbid">CgkI24DrkoMDEAIQBg</string>
+    <string name="five_guess_lbid">CgkI24DrkoMDEAIQBw</string>
+    <string name="five_time_lbid">CgkI24DrkoMDEAIQCA</string>
+    <string name="six_guess_lbid">CgkI24DrkoMDEAIQCQ</string>
+    <string name="six_time_lbid">CgkI24DrkoMDEAIQCg</string>
     <!--achievement ids-->
+    <string name="fast_finger">CgkI24DrkoMDEAIQCw</string>
+    <string name="faster_finger">CgkI24DrkoMDEAIQDA</string>
+    <string name="fastest_finger">CgkI24DrkoMDEAIQDQ</string>
+    <string name="newton">CgkI24DrkoMDEAIQDg</string>
+    <string name="einstein">CgkI24DrkoMDEAIQDw</string>
+    <string name="dexter">CgkI24DrkoMDEAIQEA</string>
+    <string name="casper">CgkI24DrkoMDEAIQEQ</string>
+    <string name="never_saw_that_coming">CgkI24DrkoMDEAIQEg </string>
+    <string name="invincible">CgkI24DrkoMDEAIQEw</string>
 
 </resources>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 
 import android.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.et.fivekilled.AlphaApplication;
 import com.et.fivekilled.FiveKilledActivity;
 import com.et.fivekilled.FourKilledActivity;
 import com.et.fivekilled.HomeMenu;
@@ -68,10 +70,14 @@ public class FiveKilledDialog extends DialogFragment {
                 String No_of_calls = getArguments().getString("noc");
                 String time_taken = getArguments().getString("tt");
                 String score = getArguments().getString("score");
-                ListDailog = prepareWinDialog(No_of_calls,time_taken,score);
+                boolean record_set = getArguments().getBoolean("is_record_set");
+                ListDailog = prepareWinDialog(No_of_calls,time_taken,score,record_set);
                 break;
             case 4:
                 ListDailog = prepareBackButtonDialog();
+                break;
+            case 5:
+                ListDailog = prepareBestRecordDialog();
                 break;
 
         }
@@ -155,7 +161,7 @@ public class FiveKilledDialog extends DialogFragment {
 
         return builder.create();
     }
-    public AlertDialog prepareWinDialog(String No_of_calls, String time_taken, String time_in_sec){
+    public AlertDialog prepareWinDialog(String No_of_calls, String time_taken, String time_in_sec,boolean rset){
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -167,7 +173,13 @@ public class FiveKilledDialog extends DialogFragment {
         Button action_button = (Button)  inGameDialogView.findViewById(R.id.btnAction);
         Button home_button   =  (Button) inGameDialogView.findViewById(R.id.btnHome);
         Button review_button = (Button) inGameDialogView.findViewById(R.id.btnReview);
+        ImageView winhscore = (ImageView) inGameDialogView.findViewById(R.id.win_hscre);
 
+        if(rset){
+            winhscore.setVisibility(View.VISIBLE);
+        }else{
+            winhscore.setVisibility(View.INVISIBLE);
+        }
         action_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -246,6 +258,69 @@ public class FiveKilledDialog extends DialogFragment {
         });
         builder.setView(inGameDialogView);
         builder.setTitle("Leave Game");
+        return builder.create();
+
+    }
+    public AlertDialog prepareBestRecordDialog(){
+        AlertDialog.Builder builder= new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View inGameDialogView =inflater.inflate(R.layout.best_record_dialog,null);
+        InGameTextView four_time = (InGameTextView) inGameDialogView.findViewById(R.id.br_four_time);
+        InGameTextView four_trials = (InGameTextView) inGameDialogView.findViewById(R.id.br_four_trials);
+        InGameTextView five_time = (InGameTextView) inGameDialogView.findViewById(R.id.br_five_time);
+        InGameTextView five_trials = (InGameTextView) inGameDialogView.findViewById(R.id.br_five_trials);
+        InGameTextView six_time = (InGameTextView) inGameDialogView.findViewById(R.id.br_six_time);
+        InGameTextView six_trials = (InGameTextView) inGameDialogView.findViewById(R.id.br_six_trials);
+        Button btnOk = (Button) inGameDialogView.findViewById(R.id.br_button);
+
+        int ft = AlphaApplication.getFourKilledTimeHs(getActivity());
+        int ftr = AlphaApplication.getFourKilledTrialsHs(getActivity());
+        int fit = AlphaApplication.getFiveKilledTimeHs(getActivity());
+        int fitr = AlphaApplication.getFiveKilledTrialsHs(getActivity());
+        int st = AlphaApplication.getSixKilledTimeHs(getActivity());
+        int str = AlphaApplication.getSixKilledTrialsHs(getActivity());
+
+
+
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+
+            }
+        });
+        if(ft==-1){
+            four_time.append("Nil");
+        }else{
+            four_time.append(String.valueOf(ft)+" seconds");
+        }if(ftr==-1){
+            four_trials.append("Nil");
+        }else{
+            four_trials.append(String.valueOf(ftr));
+        }
+        if(fit==-1){
+            five_time.append("Nil");
+        }else{
+            five_time.append(String.valueOf(fit)+" seconds");
+        }
+        if(fitr==-1){
+            five_trials.append("Nil");
+        }else{
+            five_trials.append(String.valueOf(fitr));
+        }
+        if(st==-1){
+            six_time.append("Nil");
+        }else{
+            six_time.append(String.valueOf(st)+" seconds");
+        }
+        if(str==-1){
+            six_trials.append("Nil");
+        }else{
+            six_trials.append(String.valueOf(str));
+        }
+        builder.setView(inGameDialogView);
+        builder.setTitle("Best Record");
         return builder.create();
 
     }

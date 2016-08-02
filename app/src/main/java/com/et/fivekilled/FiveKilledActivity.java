@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.app.FragmentManager;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
@@ -31,6 +32,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.games.Game;
+import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.util.ArrayList;
@@ -49,6 +52,7 @@ public class FiveKilledActivity extends BaseGameActivity{
 
     int difficultySelected;
     int number_of_calls = 0;
+
 
 
 
@@ -89,6 +93,7 @@ public class FiveKilledActivity extends BaseGameActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
+        getGameHelper().setMaxAutoSignInAttempts(0);
         fkDialog = new FiveKilledDialog();
         dialogArgs = new Bundle();
         fk = new FiveKilledHelper();
@@ -126,7 +131,7 @@ public class FiveKilledActivity extends BaseGameActivity{
             @Override
             public void onClick(View view) {
                 handleSubmit();
-                fk.tst(ComSpecialNumbers,getApplicationContext());
+//                fk.tst(ComSpecialNumbers,getApplicationContext());
             }
         });
 
@@ -216,13 +221,35 @@ public class FiveKilledActivity extends BaseGameActivity{
             timeLabel.stop();
             hideAllButtons();
             String tis = convertToSeconds(getTimeUsed());
-            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds");
+            boolean is_record_set = isHighScore(number_of_calls,tis);
+            implementHs(number_of_calls,tis);
+            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
+            if(getApiClient().isConnected()) {
+                submitScore(number_of_calls,Integer.parseInt(tis)*1000);
+            }
+            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=8){
+                unlockAchivement(getString(R.string.einstein));
+            }
+            if(getApiClient().isConnected() && number_of_calls==1){
+                unlockAchivement(getString(R.string.never_saw_that_coming));
+            }
+            if(getApiClient().isConnected() && Integer.parseInt(tis)<120){
+                unlockAchivement(getString(R.string.faster_finger));
+            }
+
         }
 
 
 
     }
+    private void unlockAchivement(String string) {
+        Games.Achievements.unlock(getApiClient(),string);
+    }
 
+    private void submitScore(int number_of_calls, int i) {
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.five_guess_lbid),number_of_calls);
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.five_time_lbid),i);
+    }
 
 
     private void updateTrials() {
@@ -352,19 +379,19 @@ public class FiveKilledActivity extends BaseGameActivity{
         doneFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),"400");
+                String tis = convertToSeconds(getTimeUsed());
+                boolean is_record_set = isHighScore(number_of_calls,tis);
+                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
                 doneFab.setVisibility(View.INVISIBLE);
             }
         });
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT);
-        rlp.addRule(RelativeLayout.ABOVE,R.id.keyPad);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rlp.setMargins(0,0,40,0);
-        rlp.width = root.getWidth()/4;
+        rlp.addRule(RelativeLayout.BELOW,R.id.sv);
+        rlp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        rlp.width = root.getWidth();
         rlp.height = root.getHeight()/10;
         root.addView(doneFab,rlp);
-
     }
     public String convertToSeconds(String time){
         String[] parts = time.split(":");
@@ -392,6 +419,7 @@ public class FiveKilledActivity extends BaseGameActivity{
         fk.createBackButtonDialog(getFragmentManager());
     }
 
+
     @Override
     public void onSignInFailed() {
 
@@ -400,6 +428,68 @@ public class FiveKilledActivity extends BaseGameActivity{
     @Override
     public void onSignInSucceeded() {
 
+    }
+
+    private boolean isHighScore(int number_of_calls, String tis) {
+        if(AlphaApplication.getFiveKilledTrialsHs(this)>=-1 &&
+                number_of_calls<AlphaApplication.getFiveKilledTrialsHs(this)){
+
+            return true;
+        }
+        else if(AlphaApplication.getFiveKilledTimeHs(this)>=-1 &&
+                Integer.parseInt(tis)<AlphaApplication.getFiveKilledTimeHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_trials_hs",number_of_calls);
+            return true;
+        }
+//        else if(AlphaApplication.getFourKilledTimeHs(this)!=-1 &&
+//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
+//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            return true;
+//
+//        }
+//        else if(AlphaApplication.getFourKilledTimeHs(this)==-1 &&
+//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            return true;
+//
+//        }
+//        else if(Integer.parseInt(tis)!=-1 &&
+//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
+//                number_of_calls<AlphaApplication.getFourKilledTrialsHs(this)){
+//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putInt("four_time_hs",Integer.parseInt(tis));
+//            editor.putInt("four_trials_hs",number_of_calls);
+//            return true;
+//
+//        }
+        return false;
+    }
+
+    private void implementHs(int noc,String tis){
+        int cths = AlphaApplication.getFiveKilledTimeHs(this);
+        int ctrhs = AlphaApplication.getFiveKilledTrialsHs(this);
+        if(ctrhs!=-1 && noc<ctrhs){
+            AlphaApplication.setFiveKilledTrialsHs(this,noc);
+        }
+        if(ctrhs==-1){
+            AlphaApplication.setFiveKilledTrialsHs(this,noc);
+        }
+        if(cths!=-1 && Integer.parseInt(tis)<cths){
+            AlphaApplication.setFiveKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
+        if(cths==-1){
+            AlphaApplication.setFiveKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
     }
 }
 

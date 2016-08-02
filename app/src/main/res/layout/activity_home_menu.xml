@@ -46,8 +46,8 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@android:color/darker_gray"
-        android:src="@android:drawable/ic_dialog_info"
+        app:backgroundTint="@android:color/black"
+        android:src="@drawable/help_icon"
         android:id="@+id/helpButton"
         android:elevation="16dp"
         android:layout_alignParentTop="true"
@@ -55,7 +55,7 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@android:color/white"
+        app:backgroundTint="@android:color/holo_blue_dark"
         android:src="@drawable/lboard_icon"
         android:id="@+id/lboardButton"
         android:elevation="16dp"
@@ -65,6 +65,24 @@
         android:layout_height="wrap_content"
         app:backgroundTint="@android:color/white"
         android:id="@+id/soutButton"
+        android:elevation="16dp"
+        android:layout_alignTop="@+id/singlePlayerButton"
+        android:layout_alignStart="@+id/fk" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        android:src="@drawable/hscore"
+        android:id="@+id/high_score_button"
+        android:elevation="16dp"
+        android:layout_alignTop="@+id/singlePlayerButton"
+        android:layout_alignEnd="@+id/fk" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        android:src="@drawable/ach_ach"
+        android:id="@+id/show_achievement_button"
         android:elevation="16dp"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/singlePlayerButton" />
