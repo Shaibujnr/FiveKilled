@@ -15,7 +15,7 @@ import Helpers.fonts.EtTextView;
 import Helpers.fonts.MenuTextView;
 
 
-public class SplashScreen extends NoStatusBarActivity implements  Runnable{
+public class SplashScreen extends AppCompatActivity implements  Runnable{
 
 
 

@@ -3,7 +3,7 @@ package com.et.fivekilled;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HelpActivity extends NoStatusBarActivity {
+public class HelpActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

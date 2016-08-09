@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--<device ids>-->
+    <string name="shaibu_did">TCY9KA9632501432</string>
     <!--admob ids-->
-    <string name="admob_app_id">ca-app-pub-1565556150226006~9483348579</string>
-    <string name="admob_banner_adunit_id">ca-app-pub-1565556150226006/1960081773</string>
+    <string name="admob_app_id">ca-app-pub-1565556150226006~6964933771</string>
+    <string name="admob_egr_banner_adunit_id">ca-app-pub-1565556150226006/8441666974</string>
     <!--leaderboard ids-->
     <string name="appId">103924023387</string>
     <string name="four_guess_lbid">CgkI24DrkoMDEAIQBQ</string>

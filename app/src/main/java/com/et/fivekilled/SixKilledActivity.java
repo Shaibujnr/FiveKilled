@@ -31,6 +31,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
@@ -59,7 +61,8 @@ public class SixKilledActivity extends BaseGameActivity{
 
 
 
-
+    AdView bannerAdview;
+    AdRequest adrec;
     Chronometer timeLabel;
     //    EditText gone, gtwo, gthree, gfour, gfive;
     Button gone, gtwo, gthree, gfour, gfive,gsix;
@@ -152,9 +155,9 @@ public class SixKilledActivity extends BaseGameActivity{
         setInput();
         setTrialLabel();
 
-        mPlayer = MediaPlayer.create(getApplicationContext(),R.raw.clockbg);
-        mPlayer.start();
-        mPlayer.setLooping(true);
+       AlphaApplication.playGameBackGroundSound(this);
+        bannerAdview = (AdView) findViewById(R.id.six_admob_banner);
+        adrec = new AdRequest.Builder().addTestDevice(getString(R.string.shaibu_did)).build();
 
 
     }
@@ -240,10 +243,11 @@ public class SixKilledActivity extends BaseGameActivity{
             boolean is_record_set = isHighScore(number_of_calls,tis);
             implementHs(number_of_calls,tis);
             fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
+            bannerAdview.loadAd(adrec);
             if(getApiClient().isConnected()) {
                 submitScore(number_of_calls,Integer.parseInt(tis)*1000);
             }
-            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=10){
+            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=15){
                 unlockAchivement(getString(R.string.dexter));
             }
             if(getApiClient().isConnected() && number_of_calls==1){
@@ -305,6 +309,7 @@ public class SixKilledActivity extends BaseGameActivity{
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        AlphaApplication.playKeypadButtonClickSound(SixKilledActivity.this);
                         String clickedText = btn.getText().toString();
                         Button availableEdit = getEmptyEdit();
                         if (availableEdit != null) {
@@ -407,6 +412,7 @@ public class SixKilledActivity extends BaseGameActivity{
         rlp.height = root.getHeight()/10;
         root.addView(doneFab,rlp);
 
+
     }
     private void hideAllButtons(){
         for(Button btn : inputs){
@@ -457,45 +463,20 @@ public class SixKilledActivity extends BaseGameActivity{
 
     }
     private boolean isHighScore(int number_of_calls, String tis) {
-        if(AlphaApplication.getSixKilledTrialsHs(this)>=-1 &&
+        if(AlphaApplication.getSixKilledTrialsHs(this)!=-1 &&
                 number_of_calls<AlphaApplication.getSixKilledTrialsHs(this)){
 
             return true;
         }
-        else if(AlphaApplication.getSixKilledTimeHs(this)>=-1 &&
+        else if(AlphaApplication.getSixKilledTimeHs(this)!=-1 &&
                 Integer.parseInt(tis)<AlphaApplication.getSixKilledTimeHs(this)){
-//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putInt("four_trials_hs",number_of_calls);
+
             return true;
         }
-//        else if(AlphaApplication.getFourKilledTimeHs(this)!=-1 &&
-//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
-//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
-//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putInt("four_time_hs",Integer.parseInt(tis));
-//            return true;
-//
-//        }
-//        else if(AlphaApplication.getFourKilledTimeHs(this)==-1 &&
-//                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
-//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putInt("four_time_hs",Integer.parseInt(tis));
-//            return true;
-//
-//        }
-//        else if(Integer.parseInt(tis)!=-1 &&
-//                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
-//                number_of_calls<AlphaApplication.getFourKilledTrialsHs(this)){
-//            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putInt("four_time_hs",Integer.parseInt(tis));
-//            editor.putInt("four_trials_hs",number_of_calls);
-//            return true;
-//
-//        }
+        else if(AlphaApplication.getSixKilledTimeHs(this)==-1 ||
+                AlphaApplication.getSixKilledTrialsHs(this)==-1){
+            return true;
+        }
         return false;
     }
 

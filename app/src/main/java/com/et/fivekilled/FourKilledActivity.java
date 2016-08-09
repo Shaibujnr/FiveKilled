@@ -32,6 +32,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
@@ -59,7 +61,8 @@ public class FourKilledActivity extends BaseGameActivity {
 
 
 
-
+    AdView bannerAdview;
+    AdRequest adrec;
     Chronometer timeLabel;
     //    EditText gone, gtwo, gthree, gfour, gfive;
     Button gone, gtwo, gthree, gfour, gfive;
@@ -153,9 +156,9 @@ public class FourKilledActivity extends BaseGameActivity {
         setKeyAlphs(keyAlphs);
         setInput();
 
-        mPlayer = MediaPlayer.create(getApplicationContext(),R.raw.clockbg);
-        mPlayer.start();
-        mPlayer.setLooping(true);
+        AlphaApplication.playGameBackGroundSound(this);
+        bannerAdview = (AdView) findViewById(R.id.four_admob_banner);
+        adrec = new AdRequest.Builder().addTestDevice(getString(R.string.shaibu_did)).build();
 
 
 
@@ -231,16 +234,17 @@ public class FourKilledActivity extends BaseGameActivity {
             boolean is_record_set = isHighScore(number_of_calls,tis);
             implementHs(number_of_calls,tis);
             fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
+            bannerAdview.loadAd(adrec);
             if(getApiClient().isConnected()) {
                 submitScore(number_of_calls,Integer.parseInt(tis)*1000);
             }
-            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=6){
+            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=5){
                 unlockAchivement(getString(R.string.newton));
             }
             if(getApiClient().isConnected() && number_of_calls==1){
                 unlockAchivement(getString(R.string.casper));
             }
-            if(getApiClient().isConnected() && Integer.parseInt(tis)<60){
+            if(getApiClient().isConnected() && Integer.parseInt(tis)<45){
                 unlockAchivement(getString(R.string.fast_finger));
             }
         }
@@ -262,18 +266,23 @@ public class FourKilledActivity extends BaseGameActivity {
 
 
     private boolean isHighScore(int number_of_calls, String tis) {
-        if(AlphaApplication.getFourKilledTrialsHs(this)>=-1 &&
+        if(AlphaApplication.getFourKilledTrialsHs(this)!=-1 &&
                 number_of_calls<AlphaApplication.getFourKilledTrialsHs(this)){
 
             return true;
         }
-        else if(AlphaApplication.getFourKilledTimeHs(this)>=-1 &&
+        else if(AlphaApplication.getFourKilledTimeHs(this)!=-1 &&
                 Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this)){
 //            SharedPreferences sp = getSharedPreferences("high_score_pref",MODE_PRIVATE);
 //            SharedPreferences.Editor editor = sp.edit();
 //            editor.putInt("four_trials_hs",number_of_calls);
             return true;
         }
+        else if(AlphaApplication.getFourKilledTimeHs(this)==-1 ||
+        AlphaApplication.getFourKilledTrialsHs(this)==-1){
+            return true;
+        }
+
 //        else if(AlphaApplication.getFourKilledTimeHs(this)!=-1 &&
 //                Integer.parseInt(tis)<AlphaApplication.getFourKilledTimeHs(this) &&
 //                number_of_calls>=AlphaApplication.getFourKilledTrialsHs(this)){
@@ -349,6 +358,7 @@ public class FourKilledActivity extends BaseGameActivity {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        AlphaApplication.playKeypadButtonClickSound(FourKilledActivity.this);
                         String clickedText = btn.getText().toString();
                         Button availableEdit = getEmptyEdit();
                         if (availableEdit != null) {
@@ -451,6 +461,7 @@ public class FourKilledActivity extends BaseGameActivity {
         rlp.width = root.getWidth();
         rlp.height = root.getHeight()/10;
         root.addView(doneFab,rlp);
+
 
     }
     public String convertToSeconds(String time){

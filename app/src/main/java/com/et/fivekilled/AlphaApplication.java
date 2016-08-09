@@ -3,6 +3,7 @@ package com.et.fivekilled;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -87,5 +88,35 @@ public class AlphaApplication extends Application {
     public static int getSixKilledTrialsHs(Context act){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         return sp.getInt(act.getString(R.string.six_trial),-1);
+    }
+    public static void playKeypadButtonClickSound(Context con){
+        MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.kpbs);
+        mPlayer.start();
+
+    }
+    public static void playRemoveLetterSound(Context con){
+        MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.rls);
+        mPlayer.start();
+
+    }
+    public static void playInsertLetterSound(Context con){
+        MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.ils);
+        mPlayer.start();
+
+    }
+    public static void playMenuButtonClickSound(Context con){
+        MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.mbs);
+        mPlayer.start();
+
+    }
+    public static void playGameBackGroundSound(Context con){
+        MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.clockbg);
+        mPlayer.start();
+        mPlayer.setLooping(true);
+    }
+    public static void playPopDiaogButtonSound(Context con){
+        MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.swoosh);
+        mPlayer.start();
+
     }
 }

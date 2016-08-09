@@ -6,16 +6,22 @@ import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import Helpers.CurvedTextView;
 import Helpers.FiveKilledDialog;
+import Helpers.FiveKilledHelper;
 import Helpers.fonts.EtTextView;
 import Helpers.fonts.MenuTextView;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
@@ -31,7 +37,6 @@ public class HomeMenu extends BaseGameActivity {
     FloatingActionButton hbtn,hscore_btn;
     FloatingActionButton showLeaderBoardButton;
     FloatingActionButton showAchievementButton;
-    FloatingActionButton soutButton;
     FragmentManager fm;
     Bundle Dialogargs;
     EtTextView FiveKilled;
@@ -52,17 +57,17 @@ public class HomeMenu extends BaseGameActivity {
         fm = getFragmentManager();
         mClient = getApiClient();
         FiveKilled = (EtTextView) findViewById(R.id.fk);
-        FiveKilled.setAnimation(anim_bounce);
+//        FiveKilled.setAnimation(anim_bounce);
         spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
         hbtn = (FloatingActionButton) findViewById(R.id.helpButton);
         showLeaderBoardButton = (FloatingActionButton) findViewById(R.id.lboardButton);
-        soutButton = (FloatingActionButton) findViewById(R.id.soutButton);
         hscore_btn = (FloatingActionButton) findViewById(R.id.high_score_button);
         showAchievementButton = (FloatingActionButton) findViewById(R.id.show_achievement_button);
 
         showAchievementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
                 if(mClient.isConnected()){
                     startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()),3);
                 }
@@ -70,28 +75,13 @@ public class HomeMenu extends BaseGameActivity {
         });
 
 
-        soutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mClient.isConnected()){
-                    signOut();
-                    Toast.makeText(HomeMenu.this,"Sign out done",Toast.LENGTH_SHORT).show();
 
-                }
-                else{
-                    beginUserInitiatedSignIn();
-
-                }
-
-
-            }
-        });
 
         showLeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
                 if(mClient.isConnected()){
-                    Toast.makeText(HomeMenu.this,"Displaying leaderBoard",Toast.LENGTH_SHORT).show();
                     startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(getApiClient()),2);
                 }
 
@@ -105,6 +95,7 @@ public class HomeMenu extends BaseGameActivity {
         hbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
                 Intent i = new Intent(HomeMenu.this,HelpActivity.class);
                 startActivity(i);
             }
@@ -112,6 +103,7 @@ public class HomeMenu extends BaseGameActivity {
         spbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
                 spbtn.setAnimation(anim_flash);
                 FiveKilledDialog fk = new FiveKilledDialog();
                 Dialogargs  = new Bundle();
@@ -125,30 +117,31 @@ public class HomeMenu extends BaseGameActivity {
         hscore_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FiveKilledDialog fk = new FiveKilledDialog();
-                Dialogargs  = new Bundle();
-                Dialogargs.putInt("DialogType",5);
-                fk.setArguments(Dialogargs);
-                fk.show(fm,"");
+                AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
+                FiveKilledHelper fk = new FiveKilledHelper();
+                fk.createBestRecordDialog(getFragmentManager());
 
             }
         });
 
         AlphaApplication.setSignedUser(mClient);
+        AdView bannerAdview = (AdView) findViewById(R.id.home_admob_banner);
+        AdRequest adrec = new AdRequest.Builder().addTestDevice(getString(R.string.shaibu_did)).build();
+        bannerAdview.loadAd(adrec);
     }
 
 
 
     @Override
     public void onSignInFailed() {
-        Toast.makeText(this,"sign in failed: unable to sign in",Toast.LENGTH_SHORT).show();
+
 
 
     }
 
     @Override
     public void onSignInSucceeded() {
-        Toast.makeText(this,"Sign in succesful",Toast.LENGTH_SHORT).show();
+
 
 
     }

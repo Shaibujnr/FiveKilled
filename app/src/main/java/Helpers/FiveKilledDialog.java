@@ -56,15 +56,14 @@ public class FiveKilledDialog extends DialogFragment {
         AlertDialog ListDailog = builder.create();
         switch (whichDialog){
             case 0:
-                builder.setTitle("Nothing passed bro");
                 ListDailog = builder.create();
                 break;
             case 1:
                 ListDailog = prepareListedDialog();
                 break;
             case 2:
-                String msg= getArguments().getString("DialogMessage");
-                ListDailog = prepareInGameDialog(msg);
+//                String msg= getArguments().getString("DialogMessage");
+//                ListDailog = prepareInGameDialog(msg);
                 break;
             case 3:
                 String No_of_calls = getArguments().getString("noc");
@@ -96,6 +95,7 @@ public class FiveKilledDialog extends DialogFragment {
         builder.setItems(mSelected,  new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                AlphaApplication.playPopDiaogButtonSound(getActivity());
 
                 switch (which){
                     case 0:
@@ -123,44 +123,47 @@ public class FiveKilledDialog extends DialogFragment {
         AlertDialog dialog = builder.create();
         return dialog;
     }
-    public AlertDialog prepareInGameDialog(String msg){
-        AlertDialog.Builder builder= new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-
-        View inGameDialogView =inflater.inflate(R.layout.game_dialog,null);
-        DefaultTextView dialog_textview = (DefaultTextView) inGameDialogView.findViewById(R.id.dialog_text) ;
-        Button action_button = (Button)  inGameDialogView.findViewById(R.id.btnAction);
-        Button cancel_button = (Button)  inGameDialogView.findViewById(R.id.btnCancel);
-        Button home_button   =  (Button) inGameDialogView.findViewById(R.id.btnHome);
-        home_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(getActivity().getApplicationContext(),HomeMenu.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                startActivity(i);
-            }
-        });
-        dialog_textview.setText(msg);
-        action_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fk.tst("Action yet to set",getActivity().getApplicationContext());
-            }
-        });
-        cancel_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        builder.setView(inGameDialogView);
-        builder.setTitle("5KILLED");
-
-        return builder.create();
-    }
+//    public AlertDialog prepareInGameDialog(String msg){
+//        AlertDialog.Builder builder= new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
+//        LayoutInflater inflater = getActivity().getLayoutInflater();
+//
+//
+//        View inGameDialogView =inflater.inflate(R.layout.game_dialog,null);
+//        DefaultTextView dialog_textview = (DefaultTextView) inGameDialogView.findViewById(R.id.dialog_text) ;
+//        Button action_button = (Button)  inGameDialogView.findViewById(R.id.btnAction);
+//        Button cancel_button = (Button)  inGameDialogView.findViewById(R.id.btnCancel);
+//        Button home_button   =  (Button) inGameDialogView.findViewById(R.id.btnHome);
+//        home_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlphaApplication.playPopDiaogButtonSound(getActivity());
+//                Intent i =  new Intent(getActivity().getApplicationContext(),HomeMenu.class);
+//                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//
+//                startActivity(i);
+//            }
+//        });
+//        dialog_textview.setText(msg);
+//        action_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlphaApplication.playPopDiaogButtonSound(getActivity());
+//                fk.tst("Action yet to set",getActivity().getApplicationContext());
+//            }
+//        });
+//        cancel_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlphaApplication.playPopDiaogButtonSound(getActivity());
+//                dismiss();
+//            }
+//        });
+//        builder.setView(inGameDialogView);
+//        builder.setTitle("ALPHAKIKILL");
+//
+//        return builder.create();
+//    }
     public AlertDialog prepareWinDialog(String No_of_calls, String time_taken, String time_in_sec,boolean rset){
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -183,6 +186,7 @@ public class FiveKilledDialog extends DialogFragment {
         action_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playPopDiaogButtonSound(getActivity());
                 getActivity().recreate();
                 dismiss();
 
@@ -191,6 +195,7 @@ public class FiveKilledDialog extends DialogFragment {
         home_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlphaApplication.playPopDiaogButtonSound(getActivity());
                 Intent i =  new Intent(getActivity().getApplicationContext(),HomeMenu.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -201,6 +206,7 @@ public class FiveKilledDialog extends DialogFragment {
         review_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playPopDiaogButtonSound(getActivity());
                 switch(getActivity().getLocalClassName()){
                     case "FourKilledActivity":
                         FourKilledActivity fka = (FourKilledActivity) getActivity();
@@ -243,6 +249,7 @@ public class FiveKilledDialog extends DialogFragment {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playPopDiaogButtonSound(getActivity());
                 Intent i =  new Intent(getActivity().getApplicationContext(),HomeMenu.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -253,6 +260,7 @@ public class FiveKilledDialog extends DialogFragment {
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playPopDiaogButtonSound(getActivity());
                 dismiss();
             }
         });
@@ -286,6 +294,7 @@ public class FiveKilledDialog extends DialogFragment {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlphaApplication.playPopDiaogButtonSound(getActivity());
                 dismiss();
 
             }
