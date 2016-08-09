@@ -1,19 +1,13 @@
 <resources>
     <string name="app_name">AlphaKill</string>
-    <string name="help_one">1.AIM OF THE GAME\n\n
-        The aim of the game is to guess accurately(position included) a set of five characters chosen
-        from a pool of twelve characters.
-    </string>
-    <!--<string  name="help_two">2. BEGIN\n\n-->
-    <!--At the beginning of the game the computer randomly chooses-->
-    <!--these five characters from the pool. These characters are invisible to you and will be referred-->
-    <!--to as 'Special Characters'. And a keyPad consisting of twelve keys will be displayed at the bottom-->
-    <!--of the screen. These keys are the character keys from the pool in which the special characters were-->
-    <!--selected from-->
-    <!--</string>-->
-    <!--<string name="help_three">3. GUESS AND RESULT-->
-    <!--when you submit your guess, a record is kept below the input boxes and the result of your guess is-->
-    <!--placed to the immediate right of your guess in the form "ak ai an" where a represents any number-->
-    <!--from 1 to 5. 'k' stands for Killed, 'i' stands for Injured and 'n' stands for None.-->
-    <!--</string>-->
+    <string name="review_done_buton">Done Reviewing</string>
+
+    <string name="shared_pref">best_record_pref</string>
+    <string name="four_time">four_time_br</string>
+    <string name="four_trial">four_trials_br</string>
+    <string name="five_time">five_time_br</string>
+    <string name="five_trial">five_trials_br</string>
+    <string name="six_time">six_time_br</string>
+    <string name="six_trial">six_trials_br</string>
+
 </resources>

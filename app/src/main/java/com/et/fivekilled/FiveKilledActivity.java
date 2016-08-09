@@ -5,9 +5,11 @@ import android.content.Intent;
 
 import android.app.FragmentManager;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,6 +32,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.games.Game;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameActivity;
+
 import java.util.ArrayList;
 
 
@@ -41,7 +49,7 @@ import Helpers.InputListener;
 import Helpers.InputTextWatcher;
 import Helpers.StaticHelpers;
 
-public class FiveKilledActivity extends NoStatusBarActivity {
+public class FiveKilledActivity extends BaseGameActivity{
 
 
     int difficultySelected;
@@ -51,6 +59,8 @@ public class FiveKilledActivity extends NoStatusBarActivity {
 
 
 
+    AdView bannerAdview;
+    AdRequest adrec;
     Chronometer timeLabel;
 //    EditText gone, gtwo, gthree, gfour, gfive;
     Button gone, gtwo, gthree, gfour, gfive;
@@ -86,6 +96,7 @@ public class FiveKilledActivity extends NoStatusBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
+        getGameHelper().setMaxAutoSignInAttempts(0);
         fkDialog = new FiveKilledDialog();
         dialogArgs = new Bundle();
         fk = new FiveKilledHelper();
@@ -94,8 +105,8 @@ public class FiveKilledActivity extends NoStatusBarActivity {
         keyPadButtons = new ArrayList<Button>();
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        keyAlphs = fk.generateKeyAlphs(12);
-        ComSpecialNumbers = fk.generateSpecialAlphs(5,keyAlphs);
+        keyAlphs = fk.generateKeyAlphs(Constants.FIVEKILLED_POOL_NUMBERS);
+        ComSpecialNumbers = fk.generateSpecialAlphs(Constants.FIVEKILLED_SPECIAL_NUMBERS,keyAlphs);
 
         gone = (Button) findViewById(R.id.gone);
         inputs.add(gone);
@@ -123,7 +134,7 @@ public class FiveKilledActivity extends NoStatusBarActivity {
             @Override
             public void onClick(View view) {
                 handleSubmit();
-                fk.tst(ComSpecialNumbers,getApplicationContext());
+//                fk.tst(ComSpecialNumbers,getApplicationContext());
             }
         });
 
@@ -139,9 +150,9 @@ public class FiveKilledActivity extends NoStatusBarActivity {
         setKeyAlphs(keyAlphs);
         setInput();
 
-        mPlayer = MediaPlayer.create(getApplicationContext(),R.raw.clockbg);
-        mPlayer.start();
-        mPlayer.setLooping(true);
+        AlphaApplication.playGameBackGroundSound(this);
+        bannerAdview = (AdView) findViewById(R.id.five_admob_banner);
+        adrec = new AdRequest.Builder().addTestDevice(getString(R.string.shaibu_did)).build();
 
 
     }
@@ -153,16 +164,16 @@ public class FiveKilledActivity extends NoStatusBarActivity {
         GridLayout.LayoutParams lpg = new GridLayout.LayoutParams();
         GridLayout.LayoutParams lpr = new GridLayout.LayoutParams();
 
-        lpg.height= (NoStatusBarActivity.ScreenHeight-keyPad.getHeight()-gone.getHeight()
+        lpg.height= (BaseGameActivity.ScreenHeight-keyPad.getHeight()-gone.getHeight()
                 -timeLabel.getHeight())/8;
-        lpg.width = (NoStatusBarActivity.ScreenWidth-(displayMag*4))/2;
+        lpg.width = (BaseGameActivity.ScreenWidth-(displayMag*4))/2;
         lpg.columnSpec = GridLayout.spec(0);
         lpg.setMargins(0,0,0,0);
 
 
-        lpr.height= (NoStatusBarActivity.ScreenHeight-keyPad.getHeight()-gone.getHeight()
+        lpr.height= (BaseGameActivity.ScreenHeight-keyPad.getHeight()-gone.getHeight()
                 -timeLabel.getHeight())/8;
-        lpr.width = (NoStatusBarActivity.ScreenWidth-(displayMag*4))/2;
+        lpr.width = (BaseGameActivity.ScreenWidth-(displayMag*4))/2;
         lpr.columnSpec = GridLayout.spec(1);
         lpr.setMargins(0,0,0,0);
 
@@ -209,20 +220,41 @@ public class FiveKilledActivity extends NoStatusBarActivity {
         });
         String resultString="";
 
-        if(fk.isWin(result)){
-            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(difficultySelected),calculateScore());
+        if(fk.isWin(result,Constants.FIVEKILLED_SPECIAL_NUMBERS)){
+            timeLabel.stop();
+            hideAllButtons();
+            String tis = convertToSeconds(getTimeUsed());
+            boolean is_record_set = isHighScore(number_of_calls,tis);
+            implementHs(number_of_calls,tis);
+            fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
+            bannerAdview.loadAd(adrec);
+            if(getApiClient().isConnected()) {
+                submitScore(number_of_calls,Integer.parseInt(tis)*1000);
+            }
+            if(getApiClient().isConnected() && number_of_calls>1 && number_of_calls<=8){
+                unlockAchivement(getString(R.string.einstein));
+            }
+            if(getApiClient().isConnected() && number_of_calls==1){
+                unlockAchivement(getString(R.string.never_saw_that_coming));
+            }
+            if(getApiClient().isConnected() && Integer.parseInt(tis)<90){
+                unlockAchivement(getString(R.string.faster_finger));
+            }
+
         }
 
 
 
     }
-
-    private String calculateScore() {
-        long secondsLeft = getTimeFromDifficultyInSeconds(difficultySelected)-Long.parseLong(getTimeUsed(difficultySelected));
-        long trialsLeft = getTrailsFromDifficulty(difficultySelected);
-        long score = secondsLeft+trialsLeft;
-        return String.valueOf(score);
+    private void unlockAchivement(String string) {
+        Games.Achievements.unlock(getApiClient(),string);
     }
+
+    private void submitScore(int number_of_calls, int i) {
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.five_guess_lbid),number_of_calls);
+        Games.Leaderboards.submitScore(getApiClient(),getString(R.string.five_time_lbid),i);
+    }
+
 
     private void updateTrials() {
         number_of_calls++;
@@ -249,8 +281,8 @@ public class FiveKilledActivity extends NoStatusBarActivity {
                 GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
 
                 lp.setMargins(mag, mag, mag, mag);
-                lp.height = NoStatusBarActivity.KeyPadHeight;
-                lp.width = (NoStatusBarActivity.ScreenWidth - (mag * (col + 3))) / col;
+                lp.height = BaseGameActivity.KeyPadHeight;
+                lp.width = (BaseGameActivity.ScreenWidth - (mag * (col + 3))) / col;
                 lp.rowSpec = GridLayout.spec(i);
                 lp.columnSpec = GridLayout.spec(j);
                 final Button btn = new Button(this);
@@ -260,6 +292,7 @@ public class FiveKilledActivity extends NoStatusBarActivity {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        AlphaApplication.playKeypadButtonClickSound(FiveKilledActivity.this);
                         String clickedText = btn.getText().toString();
                         Button availableEdit = getEmptyEdit();
                         if (availableEdit != null) {
@@ -282,8 +315,8 @@ public class FiveKilledActivity extends NoStatusBarActivity {
 
     public void setInput() {
         int mag = 2;
-        int textWidth = (NoStatusBarActivity.ScreenWidth - (7 * mag)) /14;
-        int textHeight = (NoStatusBarActivity.ScreenHeight) / 12;
+        int textWidth = (BaseGameActivity.ScreenWidth - (7 * mag)) /14;
+        int textHeight = (BaseGameActivity.ScreenHeight) / 12;
 
 
 
@@ -328,59 +361,116 @@ public class FiveKilledActivity extends NoStatusBarActivity {
 
     }
 
-    private String getTimeUsed(int dif){
-        String remainingTime = timeLabel.getText().toString();
-        String[] rtminSec = remainingTime.split(":");
-        long rMinute = Long.parseLong(rtminSec[0]);
-        long rSec = Long.parseLong(rtminSec[1]);
-        long rTotalSec = (rMinute*60)+rSec;
-        long initialTime=0;
-        switch(dif){
-            case 1:
-                initialTime = Constants.DIFFICULTY_EASY_TIME;
-                break;
-            case 2:
-                initialTime = Constants.DIFFICULTY_MEDIUM_TIME;
-                break;
-            case 3:
-                initialTime = Constants.DIFFICULTY_HARD_TIME;
-                break;
-        }
-        long initialTimeInSeconds = initialTime*60;
-        long totalSecondsUsed = initialTimeInSeconds - rTotalSec;
-        long mUsed = totalSecondsUsed/60;
-        long sUsed = totalSecondsUsed%60;
-
-        String MinutesUsed = String.valueOf(mUsed)+" : "+String.valueOf(sUsed);
-        return MinutesUsed;
+    private String getTimeUsed(){
+        return timeLabel.getText().toString();
 
 
     }
-    private long getTimeFromDifficultyInSeconds(int dif){
-        long time = 0;
-        switch(dif){
-            case 1:
-                time= Constants.DIFFICULTY_EASY_TIME*60;
-            case 2:
-                time= Constants.DIFFICULTY_MEDIUM_TIME*60;
-            case 3:
-                time= Constants.DIFFICULTY_HARD_TIME*60;
+    private void hideAllButtons(){
+        for(Button btn : inputs){
+            btn.setVisibility(View.INVISIBLE);
         }
-        return time;
+        for(Button btn : keyPadButtons){
+            btn.setVisibility(View.INVISIBLE);
+        }
+        btnSubmit.setVisibility(View.INVISIBLE);
+
     }
-    private long getTrailsFromDifficulty(int dif){
-       long trial = 0;
-        switch(dif) {
-            case 1:
-                trial =  Constants.DIFFICULTY_EASY_TRIALS;
-            case 2:
-                trial =  Constants.DIFFICULTY_MEDIUM_TRIALS;
+    public void setInReviewMode(){
+        hideAllButtons();
+        final Button doneFab = new Button(this);
+        doneFab.setText(getString(R.string.review_done_buton));
+        doneFab.setBackgroundResource(R.drawable.dialog_edge);
+        doneFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tis = convertToSeconds(getTimeUsed());
+                boolean is_record_set = isHighScore(number_of_calls,tis);
+                fk.createWinDialog(fm,String.valueOf(number_of_calls),getTimeUsed(),tis+" seconds",is_record_set);
+                doneFab.setVisibility(View.INVISIBLE);
+            }
+        });
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        rlp.addRule(RelativeLayout.BELOW,R.id.sv);
+        rlp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        rlp.width = root.getWidth();
+        rlp.height = root.getHeight()/10;
+        root.addView(doneFab,rlp);
+
+    }
+    public String convertToSeconds(String time){
+        String[] parts = time.split(":");
+        String result = "";
+        switch(parts.length){
             case 3:
-                trial =  Constants.DIFFICULTY_HARD_TRIALS;
+                int hour = Integer.parseInt(parts[0]);
+                int minute = Integer.parseInt(parts[1]);
+                int sec = Integer.parseInt(parts[2]);
+                result = String.valueOf((hour*60*60)+(minute*60)+sec);
+                break;
+            case 2:
+                int min = Integer.parseInt(parts[0]);
+                int secs = Integer.parseInt(parts[1]);
+                result = String.valueOf((min*60)+secs);
+                break;
+            case 1:
+                result = String.valueOf(parts[0]);
+                break;
         }
-        return trial;
+        return result;
+    }
+    @Override
+    public void onBackPressed() {
+        fk.createBackButtonDialog(getFragmentManager());
+    }
+
+
+    @Override
+    public void onSignInFailed() {
 
     }
 
+    @Override
+    public void onSignInSucceeded() {
+
+    }
+
+    private boolean isHighScore(int number_of_calls, String tis) {
+        if(AlphaApplication.getFiveKilledTrialsHs(this)!=-1 &&
+                number_of_calls<AlphaApplication.getFiveKilledTrialsHs(this)){
+
+            return true;
+        }
+        else if(AlphaApplication.getFiveKilledTimeHs(this)!=-1 &&
+                Integer.parseInt(tis)<AlphaApplication.getFiveKilledTimeHs(this)){
+            return true;
+        }
+        else if(AlphaApplication.getFiveKilledTimeHs(this)==-1||
+                AlphaApplication.getFiveKilledTrialsHs(this)==-1){
+            return true;
+        }
+
+        return false;
+    }
+
+    private void implementHs(int noc,String tis){
+        int cths = AlphaApplication.getFiveKilledTimeHs(this);
+        int ctrhs = AlphaApplication.getFiveKilledTrialsHs(this);
+        if(ctrhs!=-1 && noc<ctrhs){
+            AlphaApplication.setFiveKilledTrialsHs(this,noc);
+        }
+        if(ctrhs==-1){
+            AlphaApplication.setFiveKilledTrialsHs(this,noc);
+        }
+        if(cths!=-1 && Integer.parseInt(tis)<cths){
+            AlphaApplication.setFiveKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
+        if(cths==-1){
+            AlphaApplication.setFiveKilledTimeHs(this,Integer.parseInt(tis));
+
+        }
+    }
 }
 

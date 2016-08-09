@@ -3,6 +3,8 @@ package Helpers;
 import android.view.View;
 import android.widget.Button;
 
+import com.et.fivekilled.AlphaApplication;
+
 import java.util.ArrayList;
 
 /**
@@ -15,6 +17,7 @@ public class InputListener implements View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
+        AlphaApplication.playRemoveLetterSound(view.getContext());
         Button clickedInput= (Button) view;
         String clickedText = clickedInput.getText().toString();
         clickedInput.setText("");

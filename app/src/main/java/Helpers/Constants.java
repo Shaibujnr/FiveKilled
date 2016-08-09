@@ -16,4 +16,7 @@ public class Constants {
     public static final int KEYPAD_MARGIN_SIZE = 2;
     public static final int SIXKILLED_POOL_NUMBERS = 14;
     public static final int SIXKILLED_SPECIAL_NUMBERS = 6;
+    public static final int FIVEKILLED_POOL_NUMBERS = 12;
+    public static final int FIVEKILLED_SPECIAL_NUMBERS = 5;
+
 }

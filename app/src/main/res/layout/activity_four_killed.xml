@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/four_root"
     android:background="@drawable/brown8"
     tools:context="com.et.fivekilled.FourKilledActivity">
@@ -13,11 +14,32 @@
         android:id="@+id/four_timer"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/four_sv"
+        android:layout_below="@id/four_timer"
+        android:fillViewport="false"
+        android:layout_above="@+id/four_input_container">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hsv">
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/four_display"
+                android:columnCount="2">
+
+            </GridLayout>
+        </HorizontalScrollView>
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/four_timer"
+        android:layout_above="@+id/four_keyPad"
         android:id="@+id/four_input_container">
         <Button
             android:layout_width="wrap_content"
@@ -68,30 +90,6 @@
 
     </LinearLayout>
 
-
-
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/four_sv"
-        android:layout_below="@+id/four_input_container"
-        android:layout_above="@+id/four_keyPad"
-        android:fillViewport="false">
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/hsv">
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/four_display"
-                android:columnCount="2">
-
-            </GridLayout>
-        </HorizontalScrollView>
-    </ScrollView>
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -110,6 +108,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"/>
+    <com.google.android.gms.ads.AdView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/four_admob_banner"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/admob_egr_banner_adunit_id"/>
 
 
 </RelativeLayout>

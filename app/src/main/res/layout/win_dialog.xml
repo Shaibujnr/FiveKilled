@@ -5,10 +5,10 @@
     android:padding="10dp"
     >
 
-    <Helpers.fonts.DefaultTextView
+    <Helpers.fonts.InGameTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of calls : "
+        android:text="Number of calls >> "
         android:id="@+id/noc_text"
         android:layout_gravity="center_horizontal"
         android:textStyle="normal"
@@ -17,11 +17,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Helpers.fonts.DefaultTextView
+    <Helpers.fonts.InGameTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Time Taken : "
+        android:text="Time Taken >> "
         android:id="@+id/tt_text"
         android:layout_below="@+id/noc_text"
         android:layout_centerHorizontal="true" />
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="5Killed Score : "
+        android:text="Time(seconds) >> "
         android:id="@+id/score_text"
         android:layout_below="@+id/tt_text"
         android:layout_centerHorizontal="true" />
@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/score_text"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
         <Space
             android:layout_width="20px"
             android:layout_height="match_parent"
@@ -79,7 +80,27 @@
             android:layout_height="match_parent"
             android:layout_weight=".5"/>
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_margin="0dp"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Review"
+            android:background="@drawable/dialog_edge"
+            android:id="@+id/btnReview"
+            android:layout_weight=".4"
+            />
+
+
     </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hscore"
+        android:id="@+id/win_hscre"
+        android:layout_toStartOf="@+id/noc_text"
+        android:visibility="invisible"
+        android:layout_above="@+id/score_text" />
 
 
 </RelativeLayout>
