@@ -22,6 +22,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import android.widget.Chronometer;
@@ -72,9 +74,9 @@ public class FourKilledActivity extends BaseGameActivity {
     GridLayout keyPad;
     RelativeLayout root;
     ScrollView sview;
-    FloatingActionButton helpRef;
+    Button four_help_button;
 
-
+    Animation anim_flash;
     Button btnSubmit;
     FragmentManager fm;
     FiveKilledDialog fkDialog;
@@ -107,7 +109,6 @@ public class FourKilledActivity extends BaseGameActivity {
         fm = getFragmentManager();
         inputs = new ArrayList<Button>();
         keyPadButtons = new ArrayList<Button>();
-        helpRef = (FloatingActionButton) findViewById(R.id.four_help_ref);
 
         keyAlphs = fk.generateKeyAlphs(Constants.FOURKILLED_POOL_NUMBERS);
         ComSpecialNumbers = fk.generateSpecialAlphs(Constants.FOURKILLED_SPECIAL_NUMBERS,keyAlphs);
@@ -161,8 +162,11 @@ public class FourKilledActivity extends BaseGameActivity {
         AlphaApplication.playGameBackGroundSound(this);
         bannerAdview = (AdView) findViewById(R.id.four_admob_banner);
         adrec = new AdRequest.Builder().addTestDevice(getString(R.string.shaibu_did)).build();
+        anim_flash = AnimationUtils.loadAnimation(this,R.anim.anim_flash);
+        four_help_button = (Button) findViewById(R.id.four_help_button);
+        four_help_button.setAnimation(anim_flash);
 
-        helpRef.setOnClickListener(new View.OnClickListener() {
+        four_help_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(FourKilledActivity.this,TutorialActivity.class);

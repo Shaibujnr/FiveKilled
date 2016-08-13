@@ -22,6 +22,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import android.widget.Chronometer;
@@ -70,9 +72,10 @@ public class FiveKilledActivity extends BaseGameActivity{
     GridLayout keyPad;
     RelativeLayout root;
     ScrollView sview;
+    Button five_help_button;
     FloatingActionButton helpRef;
 
-
+    Animation anim_flash;
     Button btnSubmit;
     FragmentManager fm;
     FiveKilledDialog fkDialog;
@@ -126,9 +129,12 @@ public class FiveKilledActivity extends BaseGameActivity{
         root = (RelativeLayout) findViewById(R.id.root);
         sview = (ScrollView) findViewById(R.id.sv);
         trialLabel = (TextView) findViewById(R.id.trials_label);
-        helpRef = (FloatingActionButton) findViewById(R.id.five_help_ref);
 
-        helpRef.setOnClickListener(new View.OnClickListener() {
+        anim_flash = AnimationUtils.loadAnimation(this, R.anim.anim_flash);
+        five_help_button = (Button) findViewById(R.id.five_help_button);
+        five_help_button.setAnimation(anim_flash);
+
+        five_help_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(FiveKilledActivity.this,TutorialActivity.class);
@@ -290,7 +296,6 @@ public class FiveKilledActivity extends BaseGameActivity{
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
-
                 lp.setMargins(mag, mag, mag, mag);
                 lp.height = BaseGameActivity.KeyPadHeight;
                 lp.width = (BaseGameActivity.ScreenWidth - (mag * (col + 3))) / col;

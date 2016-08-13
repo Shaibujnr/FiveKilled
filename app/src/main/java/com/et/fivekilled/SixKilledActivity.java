@@ -21,6 +21,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import android.widget.Chronometer;
@@ -73,8 +75,9 @@ public class SixKilledActivity extends BaseGameActivity{
     RelativeLayout root;
     ScrollView sview;
     FloatingActionButton helpRef;
+    Button six_help_button;
 
-
+    Animation anim_flash;
     Button btnSubmit;
     FragmentManager fm;
     FiveKilledDialog fkDialog;
@@ -130,9 +133,11 @@ public class SixKilledActivity extends BaseGameActivity{
         root = (RelativeLayout) findViewById(R.id.six_root);
         sview = (ScrollView) findViewById(R.id.six_sv);
         trialLabel = (TextView) findViewById(R.id.six_trials_label);
-        helpRef = (FloatingActionButton) findViewById(R.id.six_help_ref);
+        anim_flash = AnimationUtils.loadAnimation(this,R.anim.anim_flash);
+        six_help_button = (Button) findViewById(R.id.six_help_button);
+        six_help_button.setAnimation(anim_flash);
 
-        helpRef.setOnClickListener(new View.OnClickListener() {
+        six_help_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(SixKilledActivity.this,TutorialActivity.class);
@@ -140,6 +145,7 @@ public class SixKilledActivity extends BaseGameActivity{
                 startActivity(i);
             }
         });
+
 
 
         timeLabel = (Chronometer) findViewById(R.id.six_timer);

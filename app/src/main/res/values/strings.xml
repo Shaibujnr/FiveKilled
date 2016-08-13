@@ -11,7 +11,7 @@
     <string name="six_trial">six_trials_br</string>
 
     <string name="illustration_next">NEXT</string>
-    <string name="illustration_back">SKIP</string>
+    <string name="illustration_back">CANCEL</string>
     <string name="slide_1_title">AIM</string>
     <string name="slide_1_desc">Dummy Slide One desc</string>
     <string name="slide_2_title">KILLED</string>
