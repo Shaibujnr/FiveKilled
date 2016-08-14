@@ -15,8 +15,8 @@
         android:id="@+id/singlePlayerButton"
         android:src="@drawable/singlet"
         android:elevation="16dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/show_achievement_button"
+        android:layout_toEndOf="@+id/show_achievement_button" />
 
     <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:layout_width="wrap_content"-->
@@ -33,10 +33,10 @@
         android:textSize="55dp"
         android:textColor="@android:color/black"
         android:text="ALPHAKILL"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp"
-        android:id="@+id/fk" />
+        android:id="@+id/fk"
+        android:layout_above="@+id/singlePlayerButton"
+        android:layout_toEndOf="@+id/helpButton"
+        android:layout_marginBottom="73dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -59,8 +59,8 @@
         android:elevation="16dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_alignTop="@+id/helpButton"
-        android:layout_toEndOf="@+id/show_achievement_button" />
+        android:layout_alignTop="@+id/show_achievement_button"
+        android:layout_toEndOf="@+id/singlePlayerButton" />
 
 
 
@@ -74,7 +74,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_alignTop="@+id/lboardButton"
-        android:layout_toEndOf="@id/lboardButton" />
+        android:layout_toEndOf="@+id/lboardButton" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -94,6 +94,7 @@
         android:layout_alignParentTop="true"
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/admob_egr_banner_adunit_id"/>
+
 
 
 </RelativeLayout>

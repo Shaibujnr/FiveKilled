@@ -72,6 +72,7 @@ public class FourKilledActivity extends BaseGameActivity {
     GridLayout keyPad;
     RelativeLayout root;
     ScrollView sview;
+    FloatingActionButton helpRef;
 
 
     Button btnSubmit;
@@ -106,6 +107,7 @@ public class FourKilledActivity extends BaseGameActivity {
         fm = getFragmentManager();
         inputs = new ArrayList<Button>();
         keyPadButtons = new ArrayList<Button>();
+        helpRef = (FloatingActionButton) findViewById(R.id.four_help_ref);
 
         keyAlphs = fk.generateKeyAlphs(Constants.FOURKILLED_POOL_NUMBERS);
         ComSpecialNumbers = fk.generateSpecialAlphs(Constants.FOURKILLED_SPECIAL_NUMBERS,keyAlphs);
@@ -159,6 +161,15 @@ public class FourKilledActivity extends BaseGameActivity {
         AlphaApplication.playGameBackGroundSound(this);
         bannerAdview = (AdView) findViewById(R.id.four_admob_banner);
         adrec = new AdRequest.Builder().addTestDevice(getString(R.string.shaibu_did)).build();
+
+        helpRef.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(FourKilledActivity.this,TutorialActivity.class);
+                i.putExtra("from_game_play",true);
+                startActivity(i);
+            }
+        });
 
 
 

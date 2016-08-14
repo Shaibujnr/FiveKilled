@@ -178,6 +178,15 @@ public class FiveKilledHelper {
         int killed = killed(guess,special);
         int injured = injured(guess,special);
         int none = none(guess,special);
+        if(injured == 0 && none == 0 && killed!=0){
+            return ""+killed+"KILLED";
+        }
+        else if(injured != 0 && none == 0 && killed==0){
+            return ""+injured+"INJURED";
+        }
+        else if(injured == 0 && none != 0 && killed==0){
+            return ""+none+"NONE";
+        }
         return String.format("%dk %di %dn",killed,injured,none);
     }
 

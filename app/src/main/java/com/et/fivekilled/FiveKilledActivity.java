@@ -70,6 +70,7 @@ public class FiveKilledActivity extends BaseGameActivity{
     GridLayout keyPad;
     RelativeLayout root;
     ScrollView sview;
+    FloatingActionButton helpRef;
 
 
     Button btnSubmit;
@@ -125,6 +126,16 @@ public class FiveKilledActivity extends BaseGameActivity{
         root = (RelativeLayout) findViewById(R.id.root);
         sview = (ScrollView) findViewById(R.id.sv);
         trialLabel = (TextView) findViewById(R.id.trials_label);
+        helpRef = (FloatingActionButton) findViewById(R.id.five_help_ref);
+
+        helpRef.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(FiveKilledActivity.this,TutorialActivity.class);
+                i.putExtra("from_game_play",true);
+                startActivity(i);
+            }
+        });
 
 
         timeLabel = (Chronometer) findViewById(R.id.timer);

@@ -10,4 +10,17 @@
     <string name="six_time">six_time_br</string>
     <string name="six_trial">six_trials_br</string>
 
+    <string name="illustration_next">NEXT</string>
+    <string name="illustration_back">SKIP</string>
+    <string name="slide_1_title">AIM</string>
+    <string name="slide_1_desc">Dummy Slide One desc</string>
+    <string name="slide_2_title">KILLED</string>
+    <string name="slide_2_desc">Dummy Slide two desc</string>
+    <string name="slide_3_title">INJURED</string>
+    <string name="slide_3_desc">Dummy Slide three desc</string>
+    <string name="slide_4_title">NONE</string>
+    <string name="slide_4_desc">Dummy Slide four desc</string>
+    <string name="slide_5_title">TEST</string>
+    <string name="slide_5_desc">Dummy Slide five desc</string>
+
 </resources>

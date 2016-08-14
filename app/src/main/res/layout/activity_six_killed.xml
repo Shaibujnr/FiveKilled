@@ -133,5 +133,14 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/admob_egr_banner_adunit_id"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/six_help_ref"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/help_icon"
+        android:elevation="16dp" />
+
 
 </RelativeLayout>

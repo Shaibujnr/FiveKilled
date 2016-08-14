@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,7 +19,10 @@ import Helpers.fonts.EtTextView;
 import Helpers.fonts.MenuTextView;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -25,6 +30,10 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import Helpers.FiveKilledDialog;
 
@@ -42,6 +51,9 @@ public class HomeMenu extends BaseGameActivity {
     EtTextView FiveKilled;
     Animation anim_bounce, anim_flash,anim_sway;
     GoogleApiClient mClient;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +75,10 @@ public class HomeMenu extends BaseGameActivity {
         showLeaderBoardButton = (FloatingActionButton) findViewById(R.id.lboardButton);
         hscore_btn = (FloatingActionButton) findViewById(R.id.high_score_button);
         showAchievementButton = (FloatingActionButton) findViewById(R.id.show_achievement_button);
+
+
+
+
 
         showAchievementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +112,7 @@ public class HomeMenu extends BaseGameActivity {
             @Override
             public void onClick(View view) {
                 AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
-                Intent i = new Intent(HomeMenu.this,HelpActivity.class);
+                Intent i = new Intent(HomeMenu.this,TutorialActivity.class);
                 startActivity(i);
             }
         });
@@ -128,7 +144,13 @@ public class HomeMenu extends BaseGameActivity {
         AdView bannerAdview = (AdView) findViewById(R.id.home_admob_banner);
         AdRequest adrec = new AdRequest.Builder().addTestDevice(getString(R.string.shaibu_did)).build();
         bannerAdview.loadAd(adrec);
+
+
+
     }
+
+
+
 
 
 
