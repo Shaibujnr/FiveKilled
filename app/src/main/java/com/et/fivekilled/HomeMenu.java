@@ -49,7 +49,6 @@ public class HomeMenu extends BaseGameActivity {
     FragmentManager fm;
     Bundle Dialogargs;
     EtTextView FiveKilled;
-    Animation anim_bounce, anim_flash,anim_sway;
     GoogleApiClient mClient;
 
 
@@ -59,17 +58,10 @@ public class HomeMenu extends BaseGameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_menu);
-        anim_flash = AnimationUtils.loadAnimation(this, R.anim.anim_flash);
-        anim_bounce = AnimationUtils.loadAnimation(this, R.anim.anim_bounce);
-        anim_sway = AnimationUtils.loadAnimation(this, R.anim.anim_sway);
-        anim_sway.setDuration(3000);
-        anim_bounce.setDuration(2000);
-        anim_bounce.setDuration(3000);
-        anim_bounce.setRepeatMode(Animation.REVERSE);
         fm = getFragmentManager();
         mClient = getApiClient();
         FiveKilled = (EtTextView) findViewById(R.id.fk);
-//        FiveKilled.setAnimation(anim_bounce);
+        //FiveKilled.setAnimation(anim_flash );
         spbtn = (FloatingActionButton) findViewById(R.id.singlePlayerButton);
         hbtn = (FloatingActionButton) findViewById(R.id.helpButton);
         showLeaderBoardButton = (FloatingActionButton) findViewById(R.id.lboardButton);
@@ -92,7 +84,6 @@ public class HomeMenu extends BaseGameActivity {
 
 
 
-
         showLeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +98,6 @@ public class HomeMenu extends BaseGameActivity {
             }
         });
 
-       // mpbtn = (FloatingActionButton) findViewById(R.id.multiPlayerButton);
         hbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +110,6 @@ public class HomeMenu extends BaseGameActivity {
             @Override
             public void onClick(View view) {
                 AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
-                spbtn.setAnimation(anim_flash);
                 FiveKilledDialog fk = new FiveKilledDialog();
                 Dialogargs  = new Bundle();
                 Dialogargs.putInt("DialogType",1);
@@ -129,7 +118,6 @@ public class HomeMenu extends BaseGameActivity {
 
             }
         });
-
         hscore_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

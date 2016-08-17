@@ -9,14 +9,14 @@
     tools:context="com.et.fivekilled.HomeMenu">
 
     <android.support.design.widget.FloatingActionButton
-        app:backgroundTint="@android:color/white"
+        app:backgroundTint="#C39861"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/singlePlayerButton"
-        android:src="@drawable/singlet"
+        android:src="@drawable/play"
         android:elevation="16dp"
-        android:layout_alignTop="@+id/show_achievement_button"
-        android:layout_toEndOf="@+id/show_achievement_button" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:layout_width="wrap_content"-->
@@ -33,60 +33,12 @@
         android:textSize="55dp"
         android:textColor="@android:color/black"
         android:text="ALPHAKILL"
-        android:id="@+id/fk"
-        android:layout_above="@+id/singlePlayerButton"
-        android:layout_toEndOf="@+id/helpButton"
-        android:layout_marginBottom="73dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@android:color/black"
-        android:src="@drawable/help_icon"
-        android:id="@+id/helpButton"
-        android:elevation="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="51dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@android:color/holo_blue_dark"
-        android:src="@drawable/lboard_icon"
-        android:id="@+id/lboardButton"
-        android:elevation="16dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignTop="@+id/show_achievement_button"
-        android:layout_toEndOf="@+id/singlePlayerButton" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp"
+        android:id="@+id/fk" />
 
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@android:color/holo_orange_dark"
-        android:src="@drawable/hscore"
-        android:id="@+id/high_score_button"
-        android:elevation="16dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignTop="@+id/lboardButton"
-        android:layout_toEndOf="@+id/lboardButton" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@android:color/holo_blue_dark"
-        android:src="@drawable/ach_ach"
-        android:id="@+id/show_achievement_button"
-        android:elevation="16dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignTop="@+id/helpButton"
-        android:layout_toEndOf="@+id/helpButton" />
     <com.google.android.gms.ads.AdView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,6 +47,92 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/admob_egr_banner_adunit_id"/>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/holder">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="#C39861"
+                android:src="@drawable/help_icon"
+                android:id="@+id/helpButton"
+                android:elevation="16dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="#C39861"
+                android:src="@drawable/lboard_icon"
+                android:id="@+id/lboardButton"
+                android:elevation="16dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                 />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="#C39861"
+                android:src="@drawable/hscore"
+                android:id="@+id/high_score_button"
+                android:elevation="16dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="#C39861"
+                android:src="@drawable/ach_ach"
+                android:id="@+id/show_achievement_button"
+                android:elevation="16dp"
+                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

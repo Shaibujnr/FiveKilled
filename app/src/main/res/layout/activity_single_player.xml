@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".FiveKilledActivity"
     android:id="@+id/root"
     android:background="@drawable/brown8">
@@ -131,14 +130,17 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/admob_egr_banner_adunit_id"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/five_help_ref"
-        android:layout_alignParentRight="true"
-        android:layout_margin="5dp"
-        android:src="@drawable/help_icon"
-        android:elevation="16dp" />
+        android:text=" Help!"
+        android:textSize="10sp"
+        android:background="@drawable/dialog_edge"
+        android:id="@+id/five_help_button"
+        android:layout_above="@+id/sv"
+        android:layout_alignParentEnd="true"/>
+
 
 
 </RelativeLayout>

@@ -29,7 +29,7 @@
         <item name="android:windowBackground">@drawable/brown5</item>
     </style>
     <style name="DialogAnim">
-        <item name="android:windowEnterAnimation">@anim/anim_flash</item>
+        <item name="android:windowEnterAnimation">@anim/anim_bounce</item>
     </style>
     <style name="LayoutAnim">
         <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
