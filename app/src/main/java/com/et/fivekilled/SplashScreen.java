@@ -33,9 +33,6 @@ public class SplashScreen extends AppCompatActivity implements  Runnable{
         FiveKilled = (MenuTextView) findViewById(R.id.five_killed);
         ET = (EtTextView) findViewById(R.id.et);
 
-        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/GreatPoints.ttf");
-        ET.setTypeface(tf);
-        FiveKilled.setTypeface(tf);
         new Handler().postDelayed(this,2000);
 
     }

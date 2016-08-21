@@ -12,15 +12,44 @@
 
     <string name="illustration_next">NEXT</string>
     <string name="illustration_back">CANCEL</string>
+
     <string name="slide_1_title">AIM</string>
-    <string name="slide_1_desc">Dummy Slide One desc</string>
+    <string name="slide_1_desc">
+        <!--
+        AIM DESCRIPTION
+        -->
+
+        <![CDATA[
+        Guess a set of randomly chosen letters("SPECIAL ALPHABETS") in their correct order,
+        using results from previous guesses.
+        The results appear in the following format —>
+    ]]></string>
+
+
     <string name="slide_2_title">KILLED</string>
-    <string name="slide_2_desc">Dummy Slide two desc</string>
+    <string name="slide_2_desc">
+        <!--
+        KILLED DESCRIPTION
+        -->
+        A letter is KILLED if it is guessed correctly in its exact position like "R","K" and "O" above
+    </string>
+
+
     <string name="slide_3_title">INJURED</string>
-    <string name="slide_3_desc">Dummy Slide three desc</string>
+    <string name="slide_3_desc">
+        <!--
+        INJURED DESCRIPTION
+        -->
+        A letter is INJURED if it is guessed correctly but not in its exact position like "I" and "T" above
+    </string>
     <string name="slide_4_title">NONE</string>
-    <string name="slide_4_desc">Dummy Slide four desc</string>
-    <string name="slide_5_title">TEST</string>
-    <string name="slide_5_desc">Dummy Slide five desc</string>
+    <string name="slide_4_desc">
+        <!--
+        NONE DESCRIPTION
+        -->
+        A letter is NONE if it is not among the SPECIAL ALPHABETS
+    </string>
+    <string name="slide_5_title">EXAMPLE</string>
+    <string name="slide_5_desc">Enjoy!</string>
 
 </resources>

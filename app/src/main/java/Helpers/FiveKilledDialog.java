@@ -273,7 +273,7 @@ public class FiveKilledDialog extends DialogFragment {
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View inGameDialogView =inflater.inflate(R.layout.best_record_dialog,null);
-        InGameTextView four_time = (InGameTextView) inGameDialogView.findViewById(R.id.br_four_time);
+        /*InGameTextView four_time = (InGameTextView) inGameDialogView.findViewById(R.id.br_four_time);
         InGameTextView four_trials = (InGameTextView) inGameDialogView.findViewById(R.id.br_four_trials);
         InGameTextView five_time = (InGameTextView) inGameDialogView.findViewById(R.id.br_five_time);
         InGameTextView five_trials = (InGameTextView) inGameDialogView.findViewById(R.id.br_five_trials);
@@ -287,11 +287,11 @@ public class FiveKilledDialog extends DialogFragment {
         int fitr = AlphaApplication.getFiveKilledTrialsHs(getActivity());
         int st = AlphaApplication.getSixKilledTimeHs(getActivity());
         int str = AlphaApplication.getSixKilledTrialsHs(getActivity());
+*/
 
 
 
-
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        /*btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlphaApplication.playPopDiaogButtonSound(getActivity());
@@ -327,7 +327,7 @@ public class FiveKilledDialog extends DialogFragment {
             six_trials.append("Nil");
         }else{
             six_trials.append(String.valueOf(str));
-        }
+        }*/
         builder.setView(inGameDialogView);
         builder.setTitle("Best Record");
         return builder.create();

@@ -1,55 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Helpers.fonts.InGameTextView
-        android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_edge">
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="4killed-time>> "
-        android:layout_margin="5dp"
-        android:id="@+id/br_four_time" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical">
+        <Helpers.fonts.EtTextView
+            android:id="@+id/br_four_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="4killed-time>> "
+            android:textSize="20sp" />
 
-    <Helpers.fonts.InGameTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4killed-trials>> "
-        android:layout_margin="5dp"
-        android:id="@+id/br_four_trials" />
+        <Helpers.fonts.EtTextView
+            android:id="@+id/br_four_trials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="4killed-trials>> "
+            android:textSize="20sp" />
 
-    <Helpers.fonts.InGameTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5killed-time>> "
-        android:layout_margin="5dp"
-        android:id="@+id/br_five_time" />
+        <Helpers.fonts.EtTextView
+            android:id="@+id/br_five_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="5killed-time>> "
+            android:textSize="20sp" />
 
-    <Helpers.fonts.InGameTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5killed-trials>> "
-        android:layout_margin="5dp"
-        android:id="@+id/br_five_trials" />
+        <Helpers.fonts.EtTextView
+            android:id="@+id/br_five_trials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="5killed-trials>> "
+            android:textSize="20sp"/>
 
-    <Helpers.fonts.InGameTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="6killed-time>> "
-        android:layout_margin="5dp"
-        android:id="@+id/br_six_time" />
+        <Helpers.fonts.EtTextView
+            android:id="@+id/br_six_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="6killed-time>> "
+            android:textSize="20sp" />
 
-    <Helpers.fonts.InGameTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="6killed-trials>> "
-        android:layout_margin="5dp"
-        android:id="@+id/br_six_trials" />
+        <Helpers.fonts.EtTextView
+            android:id="@+id/br_six_trials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="6killed-trials>> "
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
     <Button
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dialog_edge"
-        android:text="OK"
         android:id="@+id/br_button"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="43dp"
+        android:background="@drawable/dialog_edge"
+        android:text="OK"/>
+
+    <Helpers.fonts.EtTextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Best Records"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40sp"/>
+</RelativeLayout>

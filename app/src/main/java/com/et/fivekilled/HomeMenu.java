@@ -122,9 +122,10 @@ public class HomeMenu extends BaseGameActivity {
             @Override
             public void onClick(View view) {
                 AlphaApplication.playMenuButtonClickSound(HomeMenu.this);
-                FiveKilledHelper fk = new FiveKilledHelper();
+                startActivity(new Intent(HomeMenu.this, BestRecordsActivity.class));
+                /*FiveKilledHelper fk = new FiveKilledHelper();
                 fk.createBestRecordDialog(getFragmentManager());
-
+*/
             }
         });
 
@@ -144,8 +145,6 @@ public class HomeMenu extends BaseGameActivity {
 
     @Override
     public void onSignInFailed() {
-
-
 
     }
 

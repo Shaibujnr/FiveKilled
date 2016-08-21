@@ -25,28 +25,26 @@ public class AlphaApplication extends Application {
         AlphaApplication.signedUser = signedUser;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-
-    }
-    public static void setFourKilledTimeHs(Context act,int time){
+public static void setFourKilledTimeHs(Context act,int time){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(act.getString(R.string.four_time),time);
         editor.commit();
-    }public static void setFourKilledTrialsHs(Context act,int trials){
+    }
+
+public static void setFourKilledTrialsHs(Context act,int trials){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(act.getString(R.string.four_trial),trials);
         editor.commit();
-    }public static void setFiveKilledTimeHs(Context act,int time){
+    }
+public static void setFiveKilledTimeHs(Context act,int time){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(act.getString(R.string.five_time),time);
         editor.commit();
-    }public static void setFiveKilledTrialsHs(Context act,int trials){
+    }
+public static void setFiveKilledTrialsHs(Context act,int trials){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(act.getString(R.string.five_trial),trials);
@@ -58,6 +56,7 @@ public class AlphaApplication extends Application {
         editor.putInt(act.getString(R.string.six_time),time);
         editor.commit();
     }
+
     public static void setSixKilledTrialsHs(Context act,int trials){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -69,54 +68,70 @@ public class AlphaApplication extends Application {
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         return sp.getInt(act.getString(R.string.four_time),-1);
     }
+
     public static int getFourKilledTrialsHs(Context act){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         return sp.getInt(act.getString(R.string.four_trial),-1);
     }
+
     public static int getFiveKilledTimeHs(Context act){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         return sp.getInt(act.getString(R.string.five_time),-1);
     }
+
     public static int getFiveKilledTrialsHs(Context act){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         return sp.getInt(act.getString(R.string.five_trial),-1);
     }
+
     public static int getSixKilledTimeHs(Context act){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         return sp.getInt(act.getString(R.string.six_time),-1);
     }
+
     public static int getSixKilledTrialsHs(Context act){
         SharedPreferences sp= act.getSharedPreferences(act.getString(R.string.shared_pref),MODE_PRIVATE);
         return sp.getInt(act.getString(R.string.six_trial),-1);
     }
+
     public static void playKeypadButtonClickSound(Context con){
         MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.kpbs);
         mPlayer.start();
 
     }
+
     public static void playRemoveLetterSound(Context con){
         MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.rls);
         mPlayer.start();
 
     }
+
     public static void playInsertLetterSound(Context con){
         MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.ils);
         mPlayer.start();
 
     }
+
     public static void playMenuButtonClickSound(Context con){
         MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.mbs);
         mPlayer.start();
 
     }
+
     public static void playGameBackGroundSound(Context con){
         MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.clockbg);
         mPlayer.start();
         mPlayer.setLooping(true);
     }
+
     public static void playPopDiaogButtonSound(Context con){
-        MediaPlayer mPlayer = MediaPlayer.create(con,R.raw.swoosh);
-        mPlayer.start();
+
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
 
     }
 }

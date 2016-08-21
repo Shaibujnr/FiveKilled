@@ -25,9 +25,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@android:color/black</item>
     </style>
-    <style name="DailogBackground">
-        <item name="android:windowBackground">@drawable/brown5</item>
-    </style>
+
     <style name="DialogAnim">
         <item name="android:windowEnterAnimation">@anim/anim_bounce</item>
     </style>
